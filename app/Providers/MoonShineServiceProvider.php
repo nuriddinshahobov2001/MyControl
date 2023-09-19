@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\MoonShine\Resources\StoreResource;
 use App\MoonShine\Resources\UserResource;
 use Illuminate\Support\ServiceProvider;
 use MoonShine\MoonShine;
@@ -15,7 +16,8 @@ class MoonShineServiceProvider extends ServiceProvider
     public function boot(): void
     {
         app(MoonShine::class)->menu([
-            MenuItem::make('Клиенты', new UserResource())->icon('users'),
+            MenuItem::make('Пользователы', new UserResource())->icon('users'),
+            MenuItem::make('Магазины', new StoreResource())->icon('users'),
         ]);
     }
 }

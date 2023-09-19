@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Models\Client;
 use App\Models\User;
 
 class ClientService {
@@ -11,35 +12,35 @@ class ClientService {
     }
 
     public function store($data) {
-       return User::create([
-           'name' => $data['name'],
-           'lastname' => $data['lastname'],
+       return Client::create([
+           'fio' => $data['fio'],
            'address' => $data['address'],
            'phone' => $data['phone'],
            'description' => $data['description'],
-           'login' => $data['login'],
-           'password' => $data['password'],
-           'img' => $data['img']
-       ])->assignRole('client');
+           'limit' => $data['limit'],
+           'amount' => $data['amount']
+       ]);
     }
 
     public function update($id, $data) {
-        $user = User::find($id);
+        $user = Client::find($id);
         $user->update([
-            'name' => $data['name'],
-            'lastname' => $data['lastname'],
+            'fio' => $data['fio'],
             'address' => $data['address'],
             'phone' => $data['phone'],
             'description' => $data['description'],
-            'login' => $data['login'],
-            'password' => $data['password'],
-            'img' => $data['img']
+            'limit' => $data['limit'],
+            'amount' => $data['amount']
         ]);
 
         return $user;
     }
     public function delete($id) {
-        return User::find($id)->delete();
+        return Client::find($id)?->delete();
+    }
+
+    public function show($id) {
+        return Client::find($id);
     }
 
 

@@ -21,11 +21,9 @@ class UserResource extends Resource
 	public function fields(): array
 	{
 		return [
-		    ID::make()->sortable(),
-            Text::make('Имя', 'name' ),
-            Text::make('Фамилие', 'lastname'),
+            Text::make('ФИО', 'fio' ),
             Text::make('Логин', 'login'),
-            Text::make('Пароль', 'password'),
+            Text::make('Пароль', 'password')->hideOnIndex(),
             Phone::make('Телефон', 'phone'),
         ];
 	}

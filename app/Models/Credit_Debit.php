@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Client extends Model
+class Credit_Debit extends Model
 {
     use HasFactory;
-    protected $fillable = ['fio', 'limit', 'amount', 'address', 'description', 'phone'];
+    protected $fillable = ['client_id', 'store_id', 'author_id', 'date', 'summa', 'description'];
 }
