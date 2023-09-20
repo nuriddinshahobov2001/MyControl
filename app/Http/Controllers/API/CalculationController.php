@@ -7,9 +7,7 @@ use App\Http\Interfaces\CalculationInterface;
 use App\Http\Resources\CreditDebitResource;
 use App\Models\Credit_Debit;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
-use PHPUnit\Util\Json;
+use Illuminate\Support\Facades\DB;
 
 class CalculationController extends Controller implements CalculationInterface
 {
@@ -17,13 +15,23 @@ class CalculationController extends Controller implements CalculationInterface
     public function history($client_id, $from, $to): JsonResponse
     {
         $histories = Credit_Debit::where('client_id', $client_id)
-            ->whereBetween('created_at', [$from, $to])
+            ->whereBetween('date', [$from, $to])
             ->get();
 
         return response()->json([
             'status' => true,
-            'history' => CreditDebitResource::collection($histories)
+            'history' => CreditDebitResource::collection($histories),
         ]);
     }
+
+    public function clientDebt($from, $to) : JsonResponse {
+        $debts = Credit_Debit::select('client_id', DB::raw('SUM(summa) as total_debt'))
+            ->where('type', 'debit')
+            ->whereBetween('date', [$from, $to])
+            ->groupBy('client_id')
+            ->get();
+        return response()->json($debts);
+    }
+
 
 }
