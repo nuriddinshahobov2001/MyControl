@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/fsfsda', [\App\Http\Controllers\API\CalculationController::class, 'history'])->name('moonshine.stores.index');

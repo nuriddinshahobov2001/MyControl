@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('clients', ClientController::class);
     Route::apiResource('credit', \App\Http\Controllers\API\Credit_DebitController::class);
+
 });
 
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);

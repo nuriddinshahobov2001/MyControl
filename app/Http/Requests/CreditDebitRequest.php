@@ -22,12 +22,13 @@ class CreditDebitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'date' => 'required',
+            'date' => 'required|date',
             'client_id' => 'required',
             'author_id' => 'required',
             'store_id' => 'required',
             'summa' => 'required|integer',
-            'description' => 'nullable'
+            'description' => 'nullable',
+            'type' => 'in:credit,debit'
         ];
     }
 }

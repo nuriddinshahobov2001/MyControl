@@ -9,7 +9,7 @@ class CreditDebitService {
 
 
     public function show($id) {
-        return Credit_Debit::where('clint_id', $id)->get();
+        return Credit_Debit::where('client_id', $id)->get();
     }
 
     public function store($data) {
@@ -19,21 +19,28 @@ class CreditDebitService {
            'author_id' => $data['author_id'],
            'store_id' => $data['store_id'],
            'summa' => $data['summa'],
-           'description' => $data['description']
+           'description' => $data['description'],
+           'type' => $data['type']
         ]);
     }
     public function update($data, $id) {
-        $credit =  Credit_Debit::find();
+        $credit =  Credit_Debit::find($id);
 
-       return $credit->update([
+
+        $credit->update([
             'date' => $data['date'],
             'client_id' => $data['client_id'],
             'author_id' => $data['author_id'],
             'store_id' => $data['store_id'],
             'summa' => $data['summa'],
-            'description' => $data['description']
+            'description' => $data['description'],
+            'type' => $data['type']
         ]);
+        $credit->type = $data['type'];
+        $credit->save();
+        return $credit;
     }
+
 
 
 
