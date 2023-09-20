@@ -5,7 +5,11 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreditDebitRequest;
 use App\Http\Resources\ClientResource;
+use App\Http\Resources\CreditDebitResource;
 use App\Http\Services\CreditDebitService;
+use Carbon\Carbon;
+use Carbon\Exceptions\Exception;
+use Illuminate\Support\Collection;
 
 class Credit_DebitController extends Controller
 {
@@ -17,33 +21,38 @@ class Credit_DebitController extends Controller
     }
 
     public function show($id) {
-        $credit = $this->creditDebitService->show($id);
+        $credits = $this->creditDebitService->show($id);
 
         return response()->json([
             'status' => true,
-            'data' => new CreditDebitRequest($credit)
+            'data' => CreditDebitResource::collection($credits)
         ]);
     }
 
     public function store(CreditDebitRequest $request) {
         $data = $request->validated();
-        $this->creditDebitService->store($data);
 
+
+        $credit = $this->creditDebitService->store($data);
 
         return response()->json([
             'status' => true,
+            'credit' => new CreditDebitResource($credit)
         ]);
     }
 
     public function update(CreditDebitRequest $request, $id) {
         $data = $request->validated();
-        $client = $this->creditDebitService->update($id, $data);
+        $credit = $this->creditDebitService->update($data, $id);
 
         return response()->json([
             'status' => true,
-            'credit' => new ClientResource($client)
+            'credit' => new CreditDebitResource($credit)
         ]);
     }
+
+
+
 
 
 }

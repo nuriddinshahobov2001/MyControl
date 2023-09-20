@@ -21,7 +21,8 @@ class ClientResource extends JsonResource
             'address' => $this->address,
             'description' => $this->description,
             'limit' => $this->limit,
-            'amount' => $this->amount
+            'amount' => $this->amount,
+
         ];
     }
 }

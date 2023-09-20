@@ -18,6 +18,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -29,3 +30,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/fsfsda', [\App\Http\Controllers\API\CalculationController::class, 'history'])->name('moonshine.stores.index');
+

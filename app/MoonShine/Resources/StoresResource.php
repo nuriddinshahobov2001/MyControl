@@ -10,7 +10,7 @@ use MoonShine\Resources\Resource;
 use MoonShine\Fields\ID;
 use MoonShine\Actions\FiltersAction;
 
-class StoreResource extends Resource
+class StoresResource extends Resource
 {
 	public static string $model = Store::class;
 
