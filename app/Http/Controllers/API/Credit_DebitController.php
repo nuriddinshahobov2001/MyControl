@@ -44,23 +44,36 @@ class Credit_DebitController extends Controller
                 ['client_id', $credit->client_id]
             ])->get();
 
+            if ($credit->summa > 0 && count($debts) == 0) {
+
+                $user = Client::find($credit->client_id);
+                $user->balance += $credit->summa;
+                $user->save();
+            }
+
+
+
             $lastKey = count($debts) - 1;
 
             foreach ($debts as $key => $debt) {
+
                 if ($debt && $credit->summa >= $debt->summa) {
                     $credit->summa -= $debt->summa;
                     $debt->hasRecorded = true;
                     $debt->save();
+
 
                 } elseif ($credit->summa < $debt->summa) {
                     $debt->summa -= $credit->summa;
                     $debt->save();
 
                     $credit->summa = 0;
+
                 }
 
                 if ($key === $lastKey) {
                     if ($credit->summa > 0) {
+
                         $user = Client::find($credit->client_id);
                         $user->balance += $credit->summa;
                         $user->save();
@@ -89,10 +102,9 @@ class Credit_DebitController extends Controller
             }
         }
 
-// Возвращаем JSON-ответ за пределами цикла foreach
         return response()->json([
             'status' => true,
-            'credit' => new CreditDebitResource($credit)
+            'credit' => $credit
         ]);
 
     }

@@ -6,6 +6,7 @@ use Faker\Guesser\Name;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
+use MoonShine\Fields\BelongsToMany;
 use MoonShine\Fields\Phone;
 use MoonShine\Fields\Text;
 use MoonShine\Resources\Resource;
@@ -25,6 +26,7 @@ class UserResource extends Resource
             Text::make('Логин', 'login'),
             Text::make('Пароль', 'password')->hideOnIndex(),
             Phone::make('Телефон', 'phone'),
+            BelongsToMany::make('Магазины', 'stores')->onlyCount()->select()->hideOnIndex()
         ];
 	}
 
