@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreditDebitRequest;
-use App\Http\Resources\ClientResource;
 use App\Http\Resources\CreditDebitResource;
 use App\Http\Services\CreditDebitService;
 use App\Models\Client;
 use App\Models\Credit_Debit;
-use Carbon\Carbon;
-use Carbon\Exceptions\Exception;
-use Illuminate\Support\Collection;
 
 class Credit_DebitController extends Controller
 {
@@ -45,7 +42,6 @@ class Credit_DebitController extends Controller
             ])->get();
 
             if ($credit->summa > 0 && count($debts) == 0) {
-
                 $user = Client::find($credit->client_id);
                 $user->balance += $credit->summa;
                 $user->save();

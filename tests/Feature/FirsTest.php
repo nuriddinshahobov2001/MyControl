@@ -9,7 +9,6 @@ use Tests\TestCase;
 
 class FirsTest extends TestCase
 {
-    use RefreshDatabase;
     /**
      * A basic feature test example.
      */
@@ -18,6 +17,7 @@ class FirsTest extends TestCase
         $this->post('api/credit');
         $user = User::find(1);
         $this->actingAs($user);
+
 
         $response = $this->post('/api/credit', [
             'date' => '2023-09-23',

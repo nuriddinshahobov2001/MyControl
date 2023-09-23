@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Interfaces\CalculationInterface;
 use App\Http\Resources\CreditDebitResource;
 use App\Models\Credit_Debit;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use \App\Models\Client;
+use Illuminate\Support\Facades\Storage;
+use function Pest\Laravel\json;
 
 class CalculationController extends Controller implements CalculationInterface
 {
@@ -76,6 +79,21 @@ class CalculationController extends Controller implements CalculationInterface
 
 
         return response()->json($array_of_dates);
+    }
+
+    public function pdf() {
+        $data = Credit_Debit::get();
+
+        $pdf = PDF::loadView('pdf', compact('data'));
+        $imagePath = 'akt/' . '123.pdf';
+
+        Storage::disk('public')->put($imagePath, $pdf->output());
+        $url = Storage::url($imagePath);
+
+        return response()->json([
+            'url' => $url
+        ]);
+
     }
 
 
