@@ -27,29 +27,6 @@ class CalculationController extends Controller implements CalculationInterface
 
     public function clientDebt($from, $to): JsonResponse
     {
-//        $debts = Credit_Debit::where([
-//            ['date', '>=', $from],
-//            ['date', '<=', $to]
-//        ])->get();
-//
-//        $debit = 0;
-//        $credit = 0;
-//        foreach ($debts as $debt) {
-//            if($debt->type === 'credit') {
-//                $credit += $debt->summa;
-//            } else {
-//                $debit += $debt->summa;
-//            }
-//        }
-//
-//        $debt = $debit - $credit;
-//
-//        return response()->json([
-//            'debit' => $debit,
-//            'credit' => $credit,
-//            'debt' => $debt
-//        ]);
-
         $debts = Credit_Debit::selectRaw('client_id, SUM(CASE WHEN type = "credit" THEN summa ELSE 0 END) as credit, SUM(CASE WHEN type = "debit" THEN summa ELSE 0 END) as debit')
             ->where('date', '>=', $from)
             ->where('date', '<=', $to)
