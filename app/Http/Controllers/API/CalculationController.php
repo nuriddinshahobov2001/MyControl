@@ -19,12 +19,34 @@ class CalculationController extends Controller implements CalculationInterface
             ->whereBetween('date', [$from, $to])
             ->get();
 
+        $debt_credit = Credit_Debit_History::selectRaw('SUM(CASE WHEN type = "credit" THEN summa ELSE 0 END) as credit, SUM(CASE WHEN type = "debit" THEN summa ELSE 0 END) as debit')
+            ->where([
+                ['date', '<', $from],
+                ['client_id', $client_id]
+            ])->get();
+
+        $debt_at_begin = $debt_credit[0]->debit - $debt_credit[0]->credit;
+
+        $debit = 0;
+        $credit = 0;
+
+        foreach ($histories as $history) {
+            if ($history->type === 'debit') {
+                $debit += $history->summa;
+            } else {
+                $credit += $history->summa;
+            }
+        }
+
+        $res = $debt_at_begin + ($debit - $credit);
+
         return response()->json([
             'status' => true,
+            'debt_at_begin' => $debt_at_begin,
+            'debt_at_finish' => $res,
             'history' => CreditDebitResource::collection($histories),
         ]);
     }
-
     public function clientDebt($from, $to): JsonResponse
     {
         $debts = Credit_Debit_History::selectRaw('client_id, SUM(CASE WHEN type = "credit" THEN summa ELSE 0 END) as credit, SUM(CASE WHEN type = "debit" THEN summa ELSE 0 END) as debit')
