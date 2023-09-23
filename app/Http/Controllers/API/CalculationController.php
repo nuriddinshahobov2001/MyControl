@@ -52,42 +52,40 @@ class CalculationController extends Controller implements CalculationInterface
 
     }
 
-    public function calculate() {
+    public function calculate(): JsonResponse {
         $clients = Client::get();
+
         $array_of_dates = [];
 
-        foreach($clients as $client) {
-            $history = Credit_Debit::where('client_id', $client->id)->orderBy('date')->get();
-            $balance = 0;
-            $debtAlreadyRecorded = false;
+        foreach ($clients as $client) {
+            $history = Credit_Debit::where([
+                ['client_id', $client->id],
+                ['type', 'debit'],
+                ['hasRecorded', false]
+            ])->get();
 
-            foreach($history as $h) {
-                if ($h->type === 'credit') {
-                    $balance += $h->summa;
-                } elseif ($h->type === 'debit') {
-                    $balance -= $h->summa;
-                    if ($balance < 0 && !$debtAlreadyRecorded) {
-                        $debtPaid = Credit_Debit::where('client_id', $client->id)
-                            ->where('date', '<=', $h->date)
-                            ->where('type', 'credit')
-                            ->sum('summa');
-
-                        if ($debtPaid < -$balance) {
-                            $array_of_dates[] = [
-                                'client_id' => $client->id,
-                                'date' => $h->date,
-                                'debt_amount' => -$balance,
-                            ];
-
-                            $debtAlreadyRecorded = true;
-                        }
-                    }
-                }
+            foreach ($history as $record) {
+                $array_of_dates[$record->date][] = $record;
             }
         }
 
+
         return response()->json($array_of_dates);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
