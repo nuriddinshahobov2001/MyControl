@@ -21,7 +21,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('store', \App\Http\Controllers\API\StoreController::class);
     Route::get('/history/{client_id}/{from}/{to}', [\App\Http\Controllers\API\CalculationController::class, 'history']);
     Route::get('/debt/{from}/{to}', [\App\Http\Controllers\API\CalculationController::class, 'clientDebt']);
-    Route::get('/debt/{from}/{to}', [\App\Http\Controllers\API\CalculationController::class, 'clientDebt']);
     Route::get('/calculate', [\App\Http\Controllers\API\CalculationController::class, 'calculate']);
     Route::get('/pdf', [\App\Http\Controllers\API\CalculationController::class, 'pdf']);
 });

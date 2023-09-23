@@ -32,7 +32,6 @@ class Credit_DebitController extends Controller
     {
         $data = $request->validated();
 
-
         $credit = $this->creditDebitService->store($data);
         if ($credit->type === 'credit') {
             $debts = Credit_Debit::where([
@@ -46,8 +45,6 @@ class Credit_DebitController extends Controller
                 $user->balance += $credit->summa;
                 $user->save();
             }
-
-
 
             $lastKey = count($debts) - 1;
 
