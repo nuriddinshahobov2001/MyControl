@@ -8,7 +8,6 @@ use App\Http\Resources\CreditDebitResource;
 use App\Models\Credit_Debit;
 use App\Models\Credit_Debit_History;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 use \App\Models\Client;
 
 class CalculationController extends Controller implements CalculationInterface
@@ -16,7 +15,7 @@ class CalculationController extends Controller implements CalculationInterface
 
     public function history($client_id, $from, $to): JsonResponse
     {
-        $histories = Credit_Debit::where('client_id', $client_id)
+        $histories = Credit_Debit_History::where('client_id', $client_id)
             ->whereBetween('date', [$from, $to])
             ->get();
 
@@ -43,7 +42,7 @@ class CalculationController extends Controller implements CalculationInterface
                 'client' => $fio->fio,
                 'debit' => $debt->debit,
                 'credit' => $debt->credit,
-                'debt' => $debt->debit - $debt->credit
+                'debt' => $debt->credit - $debt->debit
             ];
         }
 

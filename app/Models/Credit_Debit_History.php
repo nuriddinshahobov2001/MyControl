@@ -17,6 +17,19 @@ class Credit_Debit_History extends Model
         'description',
         'type',
         'hasRecorded',
-        'related_credit_debit_id'];
+        'related_credit_debit_id'
+    ];
+
+    public function author() {
+        return $this->belongsTo(User::class, 'author_id');
+    }
+
+    public function client() {
+        return $this->belongsTo(Client::class);
+    }
+
+    public function store() {
+        return $this->belongsTo(Store::class);
+    }
 
 }
