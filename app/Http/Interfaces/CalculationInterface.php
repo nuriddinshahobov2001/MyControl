@@ -10,5 +10,7 @@ interface CalculationInterface {
 
     public function clientDebt($from, $to) : JsonResponse;
 
+    public function calculate() : JsonResponse;
+
 
 }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use HasFactory;
-    protected $fillable = ['fio', 'limit', 'amount', 'address', 'description', 'phone'];
+    protected $fillable = ['fio', 'limit', 'amount', 'address', 'description', 'phone', 'balance'];
 
 
     public function history() {
