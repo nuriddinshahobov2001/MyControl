@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Interfaces\CalculationInterface;
 use App\Http\Resources\CreditDebitResource;
 use App\Models\Credit_Debit;
+use App\Models\Credit_Debit_History;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use \App\Models\Client;
@@ -27,7 +28,7 @@ class CalculationController extends Controller implements CalculationInterface
 
     public function clientDebt($from, $to): JsonResponse
     {
-        $debts = Credit_Debit::selectRaw('client_id, SUM(CASE WHEN type = "credit" THEN summa ELSE 0 END) as credit, SUM(CASE WHEN type = "debit" THEN summa ELSE 0 END) as debit')
+        $debts = Credit_Debit_History::selectRaw('client_id, SUM(CASE WHEN type = "credit" THEN summa ELSE 0 END) as credit, SUM(CASE WHEN type = "debit" THEN summa ELSE 0 END) as debit')
             ->where('date', '>=', $from)
             ->where('date', '<=', $to)
             ->groupBy('client_id')
@@ -69,26 +70,7 @@ class CalculationController extends Controller implements CalculationInterface
             }
         }
 
-
         return response()->json($array_of_dates);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

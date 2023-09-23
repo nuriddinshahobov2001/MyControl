@@ -35,7 +35,6 @@ class Credit_DebitController extends Controller
     {
         $data = $request->validated();
 
-
         $credit = $this->creditDebitService->store($data);
         if ($credit->type === 'credit') {
             $debts = Credit_Debit::where([
