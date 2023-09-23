@@ -2,19 +2,21 @@
 
 namespace App\MoonShine\Resources;
 
-use Faker\Provider\Text;
+
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Store;
 
+use MoonShine\Fields\BelongsToMany;
+use MoonShine\Fields\Text;
 use MoonShine\Resources\Resource;
 use MoonShine\Fields\ID;
 use MoonShine\Actions\FiltersAction;
 
 class StoresResource extends Resource
 {
-	public static string $model = Store::class;
+    public static string $model = Store::class;
 
-	public static string $title = 'Stores';
+    public static string $title = 'Stores';
     protected bool $createInModal = true;
 
     protected bool $editInModal = true;
@@ -22,20 +24,19 @@ class StoresResource extends Resource
     protected bool $showInModal = true;
 
     public function fields(): array
-	{
-		return [
-		    \MoonShine\Fields\Text::make('Название', 'name'),
-		    \MoonShine\Fields\Text::make('Адрес','address'),
-		    \MoonShine\Fields\Text::make('Описание', 'description')
+    {
+        return [
+            Text::make('Название', 'name'),
+            Text::make('Адрес', 'address'),
+            Text::make('Описание', 'description'),
+            BelongsToMany::make('Пользователы', 'users')
         ];
-	}
-    public function resolveRoutes(): void {
-
-
     }
-	public function rules(Model $item): array
-	{
-	    return [];
+
+
+    public function rules(Model $item): array
+    {
+        return [];
     }
 
     public function search(): array
