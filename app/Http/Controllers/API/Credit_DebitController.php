@@ -50,8 +50,6 @@ class Credit_DebitController extends Controller
                 $user->save();
             }
 
-
-
             $lastKey = count($debts) - 1;
 
             foreach ($debts as $key => $debt) {
