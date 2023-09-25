@@ -46,11 +46,11 @@ class CalculationController extends Controller implements CalculationInterface
 
         $res = $debt_at_begin + ($debit - $credit);
 
-
+        $client = Client::find($client_id)->select('name');
         $randomNumber = mt_rand(1000, 9999);
         $imagePath = 'akt/' . $randomNumber . '.pdf';
 
-        $pdf = PDF::loadView('pdf', compact('histories'));
+        $pdf = PDF::loadView('pdf', compact('histories', 'from', 'to', 'client'));
 
         Storage::disk('public')->put($imagePath, $pdf->output());
         $url = Storage::url($imagePath);

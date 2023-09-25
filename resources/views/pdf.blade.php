@@ -6,14 +6,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 <body>
-<h2 class="mb-3 text-center">Акт Сверки</h2>
+<h2 class="mb-3 text-center">Akt sverki</h2>
+<p class="mb-2 text-center">za period s {{ $from }} po {{ $to }}</p>
+<p>Client: {{ $client }}</p>
 <table class="table table-bordered">
     <thead>
     <tr>
-        <th>Дата</th>
-        <th>Расход</th>
-        <th>Приход</th>
-        <th>Автор</th>
+        <th>Date</th>
+        <th>Rasxod</th>
+        <th>Prixod</th>
     </tr>
     </thead>
     <tbody>
@@ -21,11 +22,15 @@
         <tr>
             <td>{{ $row->date }}</td>
             @if($row->type == 'debit')
-            <td>{{ $row->summa }}</td>
+                <td>{{ $row->summa }}</td>
             @else
-            <td>{{ $row->summa }}</td>
+                <td></td>
             @endif
-            <td>{{ $row->author_id }}</td>
+            @if($row->type == 'credit')
+                <td>{{ $row->summa }}</td>
+            @else
+                <td></td>
+            @endif
         </tr>
     @endforeach
     </tbody>
