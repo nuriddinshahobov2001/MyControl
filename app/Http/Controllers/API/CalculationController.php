@@ -46,11 +46,21 @@ class CalculationController extends Controller implements CalculationInterface
 
         $res = $debt_at_begin + ($debit - $credit);
 
+
+        $randomNumber = mt_rand(1000, 9999);
+        $imagePath = 'akt/' . $randomNumber . '.pdf';
+
+        $pdf = PDF::loadView('pdf', compact('histories'));
+
+        Storage::disk('public')->put($imagePath, $pdf->output());
+        $url = Storage::url($imagePath);
+
         return response()->json([
             'status' => true,
             'debt_at_begin' => $debt_at_begin,
             'debt_at_finish' => $res,
-            'history' => CreditDebitResource::collection($histories),
+            'history' => $histories,
+            'url' => $url
         ]);
     }
 
@@ -112,11 +122,15 @@ class CalculationController extends Controller implements CalculationInterface
     {
         $data = Credit_Debit::get();
 
+        $randomNumber = mt_rand(1000, 9999);
+        $imagePath = 'akt/' . $randomNumber . '.pdf';
+
         $pdf = PDF::loadView('pdf', compact('data'));
-        $imagePath = 'akt/' . '123.pdf';
 
         Storage::disk('public')->put($imagePath, $pdf->output());
         $url = Storage::url($imagePath);
+
+
 
         return response()->json([
             'url' => $url
