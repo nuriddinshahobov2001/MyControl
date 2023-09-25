@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Interfaces\CalculationInterface;
-use App\Http\Resources\CreditDebitResource;
 use App\Models\Credit_Debit;
 
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -14,7 +13,7 @@ use App\Models\Credit_Debit_History;
 use Illuminate\Http\JsonResponse;
 use \App\Models\Client;
 use Illuminate\Support\Facades\Storage;
-use function Pest\Laravel\json;
+
 
 class CalculationController extends Controller implements CalculationInterface
 {
@@ -46,21 +45,24 @@ class CalculationController extends Controller implements CalculationInterface
 
         $res = $debt_at_begin + ($debit - $credit);
 
-        $client = Client::find($client_id)->select('name');
+        $client = Client::find($client_id)->first();
         $randomNumber = mt_rand(1000, 9999);
         $imagePath = 'akt/' . $randomNumber . '.pdf';
 
-        $pdf = PDF::loadView('pdf', compact('histories', 'from', 'to', 'client'));
-
+        $pdf = PDF::loadView('pdf', compact('histories', 'from', 'to', 'client', 'debt_at_begin', 'res'));
+        $pdf->getDomPDF()->getOptions()->set('isHtml5ParserEnabled', true);
+        $pdf->getDomPDF()->getOptions()->set('isPhpEnabled', true);
+        $pdf->getDomPDF()->getOptions()->set('isPhpEnabled', true);
+        $pdf->getDomPDF()->getOptions()->set('defaultFont', 'DejaVu Sans');
         Storage::disk('public')->put($imagePath, $pdf->output());
-        $url = Storage::url($imagePath);
+         $url = Storage::url($imagePath);
 
         return response()->json([
             'status' => true,
             'debt_at_begin' => $debt_at_begin,
             'debt_at_finish' => $res,
             'history' => $histories,
-            'url' => $url
+            'url' => url($url)
         ]);
     }
 
