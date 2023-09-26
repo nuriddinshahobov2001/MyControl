@@ -12,5 +12,9 @@ interface CalculationInterface {
 
     public function calculate() : JsonResponse;
 
+    public function pdf() : JsonResponse;
+
+    public function storeHistory($id) : JsonResponse;
+
 
 }

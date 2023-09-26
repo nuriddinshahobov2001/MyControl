@@ -4,8 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Interfaces\CalculationInterface;
+use App\Http\Resources\CreditDebitResource;
 use App\Models\Credit_Debit;
-
 use Barryvdh\DomPDF\Facade\Pdf;
 
 use App\Models\Credit_Debit_History;
@@ -104,7 +104,7 @@ class CalculationController extends Controller implements CalculationInterface
                 ['client_id', $client->id],
                 ['type', 'debit'],
                 ['hasRecorded', false]
-            ])->whereDate('date', '<=', now()->subDays(15))->get();
+            ])->whereDate('date', '<=', now()->subDays($client->limit))->get();
 
 
             foreach ($history as $h) {
@@ -119,8 +119,7 @@ class CalculationController extends Controller implements CalculationInterface
         return response()->json($array_of_dates);
     }
 
-
-    public function pdf()
+    public function pdf() : JsonResponse
     {
         $data = Credit_Debit::get();
 
@@ -137,7 +136,18 @@ class CalculationController extends Controller implements CalculationInterface
         return response()->json([
             'url' => $url
         ]);
+    }
 
+
+    public function storeHistory($id): JsonResponse
+    {
+       $history =  Credit_Debit_History::where('store_id', $id)->get();
+
+
+
+        return response()->json([
+            'history' => $history
+        ]);
     }
 }
 

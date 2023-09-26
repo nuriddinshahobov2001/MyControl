@@ -61,7 +61,6 @@ class Credit_DebitController extends Controller
                     $debt->save();
 
                     $credit->summa = 0;
-
                 }
 
                 if ($key === $lastKey) {
