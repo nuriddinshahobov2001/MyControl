@@ -19,7 +19,7 @@ class CreditDebitResource extends JsonResource
             'date' => $this->date,
             'client_id' => $this->client->fio,
             'author_id' => $this->author->fio,
-            'store_id' => $this->store->name,
+            'store_id' => $this->store?->name,
             'summa' => (double)$this->summa,
             'description' => $this->description,
             'type' => $this->type

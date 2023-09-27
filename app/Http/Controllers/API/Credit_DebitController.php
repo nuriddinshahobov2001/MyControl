@@ -9,6 +9,8 @@ use App\Http\Resources\CreditDebitResource;
 use App\Http\Services\CreditDebitService;
 use App\Models\Client;
 use App\Models\Credit_Debit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class Credit_DebitController extends Controller
 {
@@ -28,11 +30,25 @@ class Credit_DebitController extends Controller
         ]);
     }
 
-    public function store(CreditDebitRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        $data = Validator::make($request->all(), [
+            'date' => 'required|date',
+            'client_id' => 'required|integer',
+            'store_id' => 'required|integer',
+            'summa' => 'required|numeric',
+            'description' => 'nullable',
+            'type' => 'in:credit,debit'
+        ]);
 
-        $credit = $this->creditDebitService->store($data);
+        if ($data->fails()) {
+            return response()->json([
+                'message' => false,
+                'errors' => $data->errors()
+            ], 200);
+        }
+
+        $credit = $this->creditDebitService->store($data->validated());
 
         if ($credit->type === 'credit') {
             $debts = Credit_Debit::where([
@@ -97,7 +113,7 @@ class Credit_DebitController extends Controller
 
         return response()->json([
             'status' => true,
-            'credit' => $credit
+            'credit' => CreditDebitResource::make($credit)
         ]);
 
     }
