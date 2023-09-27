@@ -6,10 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
 use App\Http\Resources\ClientResource;
 use App\Http\Services\ClientService;
-use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use function Laravel\Prompts\alert;
+use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
@@ -45,15 +44,40 @@ class ClientController extends Controller
         ]);
     }
 
-    public function store(ClientRequest $request) {
-        $data = $request->validated();
-        $client = $this->clientService->store($data);
+    public function store(Request $request) {
+
+        $data = Validator::make($request->all(), [
+            'fio' => 'required',
+            'address' => 'required',
+            'phone' => 'required|unique:clients,phone,',
+            'limit' => 'required|integer',
+            'amount' => 'required',
+            'description' => 'nullable',
+        ], [
+            'fio.required' => 'Поле ФИО объязательно для заполнения',
+            'address.required' => 'Поле адрес объязательно для заполнения',
+            'phone.required' => 'Поле телефон объязательно для заполнения',
+            'phone.unique' => 'Такое значение поля телефон уже существует.',
+            'limit.required' => 'Поле лимит объязательно для заполнения',
+            'limit.integer' => 'Значение лимит должно быть целым числом.',
+            'amount.required' => 'Поле amount объязательно для заполнения',
+        ]);
+
+        if ($data->fails()) {
+            return response()->json([
+                'message' => false,
+                'errors' => $data->errors()
+            ], 200);
+        }
+
+        $client = $this->clientService->store($data->validated());
 
         return response()->json([
             'status' => true,
             'client' => new ClientResource($client)
         ]);
     }
+
 
     public function update(ClientRequest $request, $id) {
         $data = $request->validated();

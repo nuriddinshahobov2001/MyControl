@@ -5,6 +5,7 @@ namespace App\Http\Services;
 
 use App\Models\Credit_Debit;
 use App\Models\Credit_Debit_History;
+use Illuminate\Support\Facades\Auth;
 
 class CreditDebitService {
 
@@ -17,7 +18,7 @@ class CreditDebitService {
         Credit_Debit_History::create([
             'date' => $data['date'],
             'client_id' => $data['client_id'],
-            'author_id' => $data['author_id'],
+            'author_id' => Auth::id(),
             'store_id' => $data['store_id'],
             'summa' => $data['summa'],
             'description' => $data['description'],
@@ -27,7 +28,7 @@ class CreditDebitService {
         return Credit_Debit::create([
            'date' => $data['date'],
            'client_id' => $data['client_id'],
-           'author_id' => $data['author_id'],
+           'author_id' => Auth::id(),
            'store_id' => $data['store_id'],
            'summa' => $data['summa'],
            'description' => $data['description'],
@@ -42,7 +43,7 @@ class CreditDebitService {
         $creditHistory->update([
             'date' => $data['date'],
             'client_id' => $data['client_id'],
-            'author_id' => $data['author_id'],
+            'author_id' => Auth::id(),
             'store_id' => $data['store_id'],
             'summa' => $data['summa'],
             'description' => $data['description'],
@@ -54,12 +55,13 @@ class CreditDebitService {
         $credit->update([
             'date' => $data['date'],
             'client_id' => $data['client_id'],
-            'author_id' => $data['author_id'],
+            'author_id' => Auth::id(),
             'store_id' => $data['store_id'],
             'summa' => $data['summa'],
             'description' => $data['description'],
             'type' => $data['type']
         ]);
+
         $credit->type = $data['type'];
         $credit->save();
         return $credit;
