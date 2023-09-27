@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
 use App\Http\Requests\StoreRequest;
 use App\Http\Resources\ClientResource;
+use App\Http\Resources\StoreResource;
 use App\Http\Services\ClientService;
 use App\Http\Services\StoreService;
 use App\Models\Client;
@@ -26,7 +27,7 @@ class StoreController extends Controller
         $stores = Store::get();
         return response([
             'message' => true,
-            'stores' => $stores
+            'stores' => StoreResource::collection($stores)
         ]);
     }
 
