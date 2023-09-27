@@ -24,7 +24,6 @@ class CreditDebitRequest extends FormRequest
         return [
             'date' => 'required|date',
             'client_id' => 'required',
-            'author_id' => 'required',
             'store_id' => 'required',
             'summa' => 'required|integer',
             'description' => 'nullable',
