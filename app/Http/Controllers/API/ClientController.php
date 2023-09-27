@@ -33,7 +33,7 @@ class ClientController extends Controller
 
         return response([
             'message' => true,
-            'clients' => $clients
+            'clients' => ClientResource::collection($clients)
         ]);
     }
 
