@@ -39,6 +39,15 @@ class Credit_DebitController extends Controller
             'summa' => 'required|numeric',
             'description' => 'nullable',
             'type' => 'in:credit,debit'
+        ], [
+            'date.required' => 'Поле дата объязательно для заполнения.',
+            'date.date' => 'Значение поля дата не является датой.',
+            'client_id.required' => 'Поле клиент объязательно для заполнения.',
+            'client_id.integer' => 'Значение поле клиент должно быть целым числом.',
+            'store_id.required' => 'Поле магазин объязательно для заполнения.',
+            'store_id.integer' => 'Значение поле магазин должно быть целым числом.',
+            'summa.required' => 'Поле сумма объязательно для заполнения.',
+            'summa.numeric' => 'Значение поле сумма должно быть числом.'
         ]);
 
         if ($data->fails()) {
