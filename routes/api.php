@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/calculate', [\App\Http\Controllers\API\CalculationController::class, 'calculate']);
     Route::get('/pdf', [\App\Http\Controllers\API\CalculationController::class, 'pdf']);
     Route::get('/store/history/{id}', [\App\Http\Controllers\API\CalculationController::class, 'storeHistory']);
+    Route::get('/getClientInfo/{id}', [ClientController::class, 'getClientInfo']);
 });
 
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);

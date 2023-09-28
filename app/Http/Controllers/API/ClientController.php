@@ -5,7 +5,10 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
 use App\Http\Resources\ClientResource;
+use App\Http\Resources\GetClientInfoResource;
 use App\Http\Services\ClientService;
+use App\Models\Client;
+use App\Models\Credit_Debit_History;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -75,6 +78,22 @@ class ClientController extends Controller
         return response()->json([
             'status' => true,
             'client' => new ClientResource($client)
+        ]);
+    }
+
+
+    public function getClientInfo($id) {
+
+        $client = $this->clientService->getClientInfo($id);
+
+        return response()->json([
+           'fio' => $client['fio'],
+           'limit' => $client['limit'],
+           'debt' => $client['debt'],
+           'all_debit' => $client['all_debit'],
+           'all_credit' => $client['all_credit'],
+           'history_of_debit' => GetClientInfoResource::collection($client['history_of_debit']),
+           'history_of_credit' => GetClientInfoResource::collection($client['history_of_credit'])
         ]);
     }
 
