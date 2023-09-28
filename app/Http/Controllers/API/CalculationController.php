@@ -83,7 +83,7 @@ class CalculationController extends Controller implements CalculationInterface
                 'client' => $fio->fio,
                 'debit' => $debt->debit,
                 'credit' => $debt->credit,
-                'debt' => $debt->credit - $debt->debit
+                'debt' => $debt->debit - $debt->credit
             ];
         }
 
@@ -142,8 +142,6 @@ class CalculationController extends Controller implements CalculationInterface
     public function storeHistory($id): JsonResponse
     {
        $history =  Credit_Debit_History::where('store_id', $id)->get();
-
-
 
         return response()->json([
             'history' => $history

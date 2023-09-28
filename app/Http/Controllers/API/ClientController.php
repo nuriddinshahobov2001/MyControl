@@ -88,8 +88,8 @@ class ClientController extends Controller
 
         return response()->json([
            'fio' => $client['fio'],
-           'limit' => $client['limit'],
-           'debt' => $client['debt'],
+           'limit' => (string)$client['limit'],
+           'debt' => (string)$client['debt'],
            'all_debit' => $client['all_debit'],
            'all_credit' => $client['all_credit'],
            'history_of_debit' => GetClientInfoResource::collection($client['history_of_debit']),
