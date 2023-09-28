@@ -5,11 +5,13 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Interfaces\CalculationInterface;
 use App\Http\Resources\CreditDebitResource;
+use App\Http\Resources\HistoryResource;
 use App\Models\Credit_Debit;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 use App\Models\Credit_Debit_History;
 
+use http\Env\Response;
 use Illuminate\Http\JsonResponse;
 use \App\Models\Client;
 use Illuminate\Support\Facades\Storage;
@@ -20,6 +22,13 @@ class CalculationController extends Controller implements CalculationInterface
 
     public function history($client_id, $from, $to): JsonResponse
     {
+        if ($client_id === "0") {
+            $history = Credit_Debit_History::where('date', today())->get();
+
+            return response()->json([
+                'history' => HistoryResource::collection($history)
+            ]);
+        }
         $histories = Credit_Debit_History::where('client_id', $client_id)
             ->whereBetween('date', [$from, $to])
             ->get();
