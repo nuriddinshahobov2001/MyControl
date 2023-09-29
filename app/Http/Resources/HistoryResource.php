@@ -18,8 +18,9 @@ class HistoryResource extends JsonResource
             'id' => $this->id,
             'date' => $this->date,
             'client' => $this->client?->fio,
-            'type' => $this->type,
+            'author' => $this->author?->fio,
             'client_id' => $this->author?->id,
+            'type' => $this->type,
             'summa' => $this->summa
         ];
     }
