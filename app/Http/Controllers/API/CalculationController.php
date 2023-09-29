@@ -22,13 +22,6 @@ class CalculationController extends Controller implements CalculationInterface
 
     public function aktSverki($client_id, $from, $to): JsonResponse
     {
-        if ($client_id === "0") {
-            $history = Credit_Debit_History::where('date', today())->get();
-
-            return response()->json([
-                'history' => HistoryResource::collection($history)
-            ]);
-        }
         $histories = Credit_Debit_History::where('client_id', $client_id)
             ->whereBetween('date', [$from, $to])
             ->get();
