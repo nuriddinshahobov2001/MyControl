@@ -73,7 +73,8 @@ class CalculationController extends Controller implements CalculationInterface
                 'status' => true,
                 'debt_at_begin' => "0",
                 'debt_at_finish' => "0",
-                'history' => []
+                'history' => [],
+                'url' => null
             ]);
         }
 
