@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Storage;
 class CalculationController extends Controller implements CalculationInterface
 {
 
-    public function history($client_id, $from, $to): JsonResponse
+    public function aktSverki($client_id, $from, $to): JsonResponse
     {
         if ($client_id === "0") {
             $history = Credit_Debit_History::where('date', today())->get();
