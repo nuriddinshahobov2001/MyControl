@@ -21,12 +21,12 @@ class DatabaseSeeder extends Seeder
             Role::create([
                 'name' => 'admin'
             ]);
-        \App\Models\User::create([
-            'fio' => 'Admin',
-            'login' => 'admin',
-            'password' => 'password',
-            'phone' => '937711891'
-        ])->assignRole('admin');
+            \App\Models\User::create([
+                'fio' => 'Admin',
+                'login' => 'admin',
+                'password' => 'password',
+                'phone' => '937711891'
+            ])->assignRole('admin');
          \App\Models\User::create([
              'fio' => 'Test User',
              'login' => 'user',

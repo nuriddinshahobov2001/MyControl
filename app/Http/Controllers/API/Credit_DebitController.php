@@ -9,6 +9,8 @@ use App\Http\Resources\CreditDebitResource;
 use App\Http\Services\CreditDebitService;
 use App\Models\Client;
 use App\Models\Credit_Debit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class Credit_DebitController extends Controller
 {
@@ -28,11 +30,35 @@ class Credit_DebitController extends Controller
         ]);
     }
 
-    public function store(CreditDebitRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        $data = Validator::make($request->all(), [
+            'date' => 'required|date',
+            'client_id' => 'required|integer',
+            'store_id' => 'required|integer',
+            'summa' => 'required|numeric',
+            'description' => 'nullable',
+            'type' => 'in:credit,debit'
+        ], [
+            'date.required' => 'Поле дата объязательно для заполнения.',
+            'date.date' => 'Значение поля дата не является датой.',
+            'client_id.required' => 'Поле клиент объязательно для заполнения.',
+            'client_id.integer' => 'Значение поле клиент должно быть целым числом.',
+            'store_id.required' => 'Поле магазин объязательно для заполнения.',
+            'store_id.integer' => 'Значение поле магазин должно быть целым числом.',
+            'summa.required' => 'Поле сумма объязательно для заполнения.',
+            'summa.numeric' => 'Значение поле сумма должно быть числом.'
+        ]);
 
-        $credit = $this->creditDebitService->store($data);
+        if ($data->fails()) {
+            return response()->json([
+                'message' => false,
+                'errors' => $data->errors()
+            ], 200);
+        }
+
+        $credit = $this->creditDebitService->store($data->validated());
+
         if ($credit->type === 'credit') {
             $debts = Credit_Debit::where([
                 ['hasRecorded', 0],
@@ -96,7 +122,7 @@ class Credit_DebitController extends Controller
 
         return response()->json([
             'status' => true,
-            'credit' => $credit
+            'credit' => CreditDebitResource::make($credit)
         ]);
 
     }
@@ -110,9 +136,5 @@ class Credit_DebitController extends Controller
             'credit' => new CreditDebitResource($credit)
         ]);
     }
-
-
-
-
 
 }
