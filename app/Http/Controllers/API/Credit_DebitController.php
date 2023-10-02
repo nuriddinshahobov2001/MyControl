@@ -21,7 +21,8 @@ class Credit_DebitController extends Controller
         $this->creditDebitService = $creditDebitService;
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         $credits = $this->creditDebitService->show($id);
 
         return response()->json([
@@ -98,12 +99,11 @@ class Credit_DebitController extends Controller
                     }
                 }
             }
-        }
-        else {
+        } else {
             $client = Client::find($credit->client_id);
             if ($client) {
                 if ($client->balance > 0) {
-                    if ($client->balance > $credit->summa){
+                    if ($client->balance > $credit->summa) {
                         $client->balance -= $credit->summa;
                         $client->save();
 
@@ -127,13 +127,30 @@ class Credit_DebitController extends Controller
 
     }
 
-    public function update(CreditDebitRequest $request, $id) {
+    public function update(CreditDebitRequest $request, $id)
+    {
         $data = $request->validated();
         $credit = $this->creditDebitService->update($data, $id);
 
         return response()->json([
             'status' => true,
             'credit' => new CreditDebitResource($credit)
+        ]);
+    }
+
+    public function delete($id)
+    {
+        $data = Credit_Debit::where('id', $id)->first();
+        if ($data != null) {
+            $data->delete();
+            return response()->json([
+                'message' => true,
+                'info' => "Успешно удалено!"
+            ]);
+        }
+        return response() ->json([
+            'message' => false,
+            'info' => 'Уже удалено!'
         ]);
     }
 
