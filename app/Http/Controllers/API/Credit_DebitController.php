@@ -138,9 +138,9 @@ class Credit_DebitController extends Controller
         ]);
     }
 
-    public function delete($id)
+    public function delete(Request $request)
     {
-        $data = Credit_Debit::where('id', $id)->first();
+        $data = Credit_Debit::where('id', $request->id)->first();
         if ($data != null) {
             $data->delete();
             return response()->json([
