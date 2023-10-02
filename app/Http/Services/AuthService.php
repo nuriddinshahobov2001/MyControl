@@ -14,7 +14,6 @@ class AuthService {
         }
 
         return  $user->createToken('android-token')->plainTextToken;
-
     }
 
 
