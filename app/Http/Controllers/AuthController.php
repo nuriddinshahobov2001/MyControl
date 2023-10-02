@@ -30,7 +30,6 @@ class AuthController extends Controller
         }
         $user = User::where('login', $data['login'])->first();
 
-        //       dd($data);
         return response()->json([
             'id' => $user->id,
             'name' => $user->fio,
