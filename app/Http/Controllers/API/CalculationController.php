@@ -82,23 +82,39 @@ class CalculationController extends Controller implements CalculationInterface
 
     public function clientDebt($from, $to): JsonResponse
     {
-        $debts = Credit_Debit_History::selectRaw('client_id, SUM(CASE WHEN type = "credit" THEN summa ELSE 0 END) as credit, SUM(CASE WHEN type = "debit" THEN summa ELSE 0 END) as debit')
+        $debts_at_begin = Credit_Debit_History::selectRaw('client_id,
+                 SUM(CASE WHEN type = "credit" THEN summa ELSE 0 END) as credit,
+                 SUM(CASE WHEN type = "debit" THEN summa ELSE 0 END) as debit')
+            ->where('date', '<', $from)
+            ->groupBy('client_id')
+            ->get();
+
+        $debts = Credit_Debit_History::selectRaw('client_id,
+                 SUM(CASE WHEN type = "credit" THEN summa ELSE 0 END) as credit,
+                 SUM(CASE WHEN type = "debit" THEN summa ELSE 0 END) as debit')
             ->where('date', '>=', $from)
             ->where('date', '<=', $to)
             ->groupBy('client_id')
             ->get();
 
         $clientDebts = [];
-
+        $c = 0;
         foreach ($debts as $debt) {
             $fio = Client::find($debt->client_id);
+            if ($debts_at_begin[0]->client_id === $debt->client_id) {
+                $debt_at_begin = $debts_at_begin[$c]->debit - $debts_at_begin[$c]->credit;
+            }
 
             $clientDebts[] = [
                 'client' => $fio?->fio,
                 'debit' => $debt->debit,
                 'credit' => $debt->credit,
-                'debt' => $debt->debit - $debt->credit
+                'debt_at_begin' => number_format($debt_at_begin, 2) ?? 0,
+                'debt_at_finish' => number_format($debt_at_begin + $debt->debit - $debt->credit, 2)
             ];
+
+            $c++;
+            $debt_at_begin = 0;
         }
 
         return response()->json([

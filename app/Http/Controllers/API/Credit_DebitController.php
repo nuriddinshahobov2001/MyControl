@@ -146,6 +146,7 @@ class Credit_DebitController extends Controller
         if ($data != null) {
             $data->delete();
             $history->delete();
+
             return response()->json([
                 'message' => true,
                 'info' => "Успешно удалено!"
