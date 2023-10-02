@@ -9,6 +9,7 @@ use App\Http\Resources\CreditDebitResource;
 use App\Http\Services\CreditDebitService;
 use App\Models\Client;
 use App\Models\Credit_Debit;
+use App\Models\Credit_Debit_History;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -141,8 +142,10 @@ class Credit_DebitController extends Controller
     public function delete(Request $request)
     {
         $data = Credit_Debit::where('id', $request->id)->first();
+        $history = Credit_Debit_History::where('id', $request->id)->first();
         if ($data != null) {
             $data->delete();
+            $history->delete();
             return response()->json([
                 'message' => true,
                 'info' => "Успешно удалено!"
