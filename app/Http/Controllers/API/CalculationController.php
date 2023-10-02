@@ -101,6 +101,7 @@ class CalculationController extends Controller implements CalculationInterface
         $c = 0;
         foreach ($debts as $debt) {
             $fio = Client::find($debt->client_id);
+            $debt_at_begin = 0;
             if (isset($debts_at_begin[$c]->client_id)) {
                 if ($debts_at_begin[$c]->client_id === $debt->client_id) {
                     $debt_at_begin = $debts_at_begin[$c]->debit - $debts_at_begin[$c]->credit;
@@ -116,7 +117,6 @@ class CalculationController extends Controller implements CalculationInterface
             ];
 
             $c++;
-            $debt_at_begin = 0;
         }
 
         return response()->json([
