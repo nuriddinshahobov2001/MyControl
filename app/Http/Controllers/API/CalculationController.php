@@ -94,7 +94,7 @@ class CalculationController extends Controller implements CalculationInterface
             $fio = Client::find($debt->client_id);
 
             $clientDebts[] = [
-                'client' => $fio->fio,
+                'client' => $fio?->fio,
                 'debit' => $debt->debit,
                 'credit' => $debt->credit,
                 'debt' => $debt->debit - $debt->credit
