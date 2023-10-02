@@ -32,11 +32,18 @@ class ClientController extends Controller
             ->groupBy('clients.id', 'clients.fio', 'clients.limit', 'clients.amount', 'clients.address',
                 'clients.description', 'clients.phone', 'clients.balance')
             ->get();
+        if ($clients !== null) {
+            return response([
+                'message' => true,
+                'clients' => ClientResource::collection($clients)
+            ]);
+        } else{
+            return response([
+                'message' => true,
+                'clients' => []
+            ]);
+        }
 
-        return response([
-            'message' => true,
-            'clients' => ClientResource::collection($clients)
-        ]);
     }
 
     public function show($id) {
