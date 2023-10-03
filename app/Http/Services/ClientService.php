@@ -61,6 +61,7 @@ class ClientService {
             'fio' => $client->fio,
             'phone' => $client->phone,
             'address' => $client->address,
+            'description' => $client->description,
             'limit' => $client->limit,
             'debt' => $debt,
             'all_debit' => $debit,
