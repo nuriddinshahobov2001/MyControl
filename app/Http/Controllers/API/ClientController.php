@@ -92,8 +92,6 @@ class ClientController extends Controller
            'debt' => number_format($client['debt'], 2),
            'all_debit' => number_format($client['all_debit'], 2),
            'all_credit' => number_format($client['all_credit'], 2),
-           'history_of_debit' => GetClientInfoResource::collection($client['history_of_debit']),
-           'history_of_credit' => GetClientInfoResource::collection($client['history_of_credit'])
         ]);
     }
 
