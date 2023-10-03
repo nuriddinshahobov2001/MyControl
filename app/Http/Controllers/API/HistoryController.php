@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\HistoryResource;
 use App\Models\Credit_Debit_History;
-use Illuminate\Http\Request;
 
 class HistoryController extends Controller
 {

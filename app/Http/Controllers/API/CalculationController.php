@@ -8,7 +8,6 @@ use App\Http\Resources\CreditDebitResource;
 use App\Http\Resources\HistoryResource;
 use App\Models\Credit_Debit;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;
 use App\Models\Credit_Debit_History;
 use Illuminate\Http\JsonResponse;
 use \App\Models\Client;
