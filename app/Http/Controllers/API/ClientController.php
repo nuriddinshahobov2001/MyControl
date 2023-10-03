@@ -88,6 +88,8 @@ class ClientController extends Controller
 
         return response()->json([
            'fio' => $client['fio'],
+           'phone' => $client['phone'],
+           'address' => $client['address'],
            'limit' => (string)$client['limit'],
            'debt' => number_format($client['debt'], 2),
            'all_debit' => number_format($client['all_debit'], 2),
