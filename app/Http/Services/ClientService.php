@@ -56,24 +56,15 @@ class ClientService {
         $credit = $debit_credit[0]->credit;
         $debt = $debit - $credit;
 
-        $history_of_debit = Credit_Debit_History::where([
-            ['client_id', $id],
-            ['type', 'debit']
-        ])->get();
-
-        $history_of_credit = Credit_Debit_History::where([
-            ['client_id', $id],
-            ['type', 'credit']
-        ])->get();
 
         return [
             'fio' => $client->fio,
+            'phone' => $client->phone,
+            'address' => $client->address,
             'limit' => $client->limit,
             'debt' => $debt,
             'all_debit' => $debit,
             'all_credit' => $credit,
-            'history_of_debit' => $history_of_debit,
-            'history_of_credit' => $history_of_credit
         ];
 
     }
