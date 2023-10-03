@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,7 +17,7 @@ class CreditDebitResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'date' => $this->date,
+            'date' => Carbon::parse($this->date)->format('Y-m-d'),
             'client_id' => $this->client->fio,
             'author_id' => $this->author->fio,
             'store_id' => $this->store?->name,

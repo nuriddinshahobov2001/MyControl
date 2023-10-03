@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,7 +16,7 @@ class GetClientInfoResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'date' => $this->date,
+            'date' => Carbon::parse($this->date)->format('Y-m-d'),
             'summa' => $this->summa,
             'author' => $this->author?->fio,
             'store' => $this->store?->name
