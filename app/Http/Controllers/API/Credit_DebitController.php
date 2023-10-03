@@ -35,7 +35,7 @@ class Credit_DebitController extends Controller
     public function store(Request $request)
     {
         $data = Validator::make($request->all(), [
-            'date' => 'required|date',
+            'date' => 'required|date_format:Y-m-d G:i:s',
             'client_id' => 'required|integer',
             'store_id' => 'required|integer',
             'summa' => 'required|numeric',
