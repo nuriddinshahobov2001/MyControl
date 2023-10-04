@@ -15,8 +15,11 @@ class CreditDebitService {
     }
 
     public function store($data) {
+
+        $currentTime = date('H:i:s');
+
         Credit_Debit_History::create([
-            'date' => $data['date'],
+            'date' => $data['date'] . ' ' . $currentTime,
             'client_id' => $data['client_id'],
             'author_id' => Auth::id(),
             'store_id' => $data['store_id'],
@@ -26,7 +29,7 @@ class CreditDebitService {
         ]);
 
         return Credit_Debit::create([
-           'date' => $data['date'],
+           'date' => $data['date']  . ' ' . $currentTime,
            'client_id' => $data['client_id'],
            'author_id' => Auth::id(),
            'store_id' => $data['store_id'],
