@@ -15,7 +15,7 @@
 <body>
 <h2 class="mb-3 text-center">Akt Sverki</h2>
 <p class="mb-2 text-center">za period s {{ $from }} do {{ $to }}</p>
-<p>Klient: {{ $client->fio   }} </p>
+<p>Klient: {{ $client?->fio   }} </p>
 <p>Dolg na nachalo: {{ number_format($debt_at_begin, 2) }}  </p>
 <p>Dolg na konets: {{ number_format($res, 2) }} </p>
 <table class="table table-bordered">

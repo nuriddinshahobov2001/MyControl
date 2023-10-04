@@ -45,7 +45,7 @@ class CalculationController extends Controller implements CalculationInterface
 
             $res = $debt_at_begin + ($debit - $credit);
 
-            $client = Client::find($client_id)->first();
+            $client = Client::find($client_id);
             $randomNumber = mt_rand(1000, 9999);
             $imagePath = 'akt/' . $randomNumber . '.pdf';
 
