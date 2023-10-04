@@ -24,5 +24,11 @@ class CheckController extends Controller
         $response = Http::withOptions([
             'verify' => false,
         ])->connect('https://http://192.168.1.35:8080');
+
+
+
+        return response()->json([
+           'response' => $response
+        ]);
     }
 }
