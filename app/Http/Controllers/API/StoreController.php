@@ -3,17 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ClientRequest;
 use App\Http\Requests\StoreRequest;
-use App\Http\Resources\ClientResource;
 use App\Http\Resources\StoreResource;
-use App\Http\Services\ClientService;
 use App\Http\Services\StoreService;
-use App\Models\Client;
 use App\Models\Store;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use function Laravel\Prompts\alert;
+
 
 class StoreController extends Controller
 {

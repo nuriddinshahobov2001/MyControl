@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('credit__debits', function (Blueprint $table) {
-            $table->string('date')->change();
+            $table->date('date')->change();
         });
         Schema::table('credit__debit__histories', function (Blueprint $table) {
-            $table->string('date')->change();
+            $table->date('date')->change();
         });
     }
 
