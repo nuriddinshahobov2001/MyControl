@@ -8,10 +8,7 @@ use App\Http\Resources\CreditDebitResource;
 use App\Http\Resources\HistoryResource;
 use App\Models\Credit_Debit;
 use Barryvdh\DomPDF\Facade\Pdf;
-
 use App\Models\Credit_Debit_History;
-
-use http\Env\Response;
 use Illuminate\Http\JsonResponse;
 use \App\Models\Client;
 use Illuminate\Support\Facades\Storage;
@@ -24,7 +21,7 @@ class CalculationController extends Controller implements CalculationInterface
     {
         $debit = 0;
         $credit = 0;
-
+        $to = date('Y-m-d', strtotime($to . ' +1 day'));
         if ($client_id !== "0") {
             $histories = Credit_Debit_History::where('client_id', $client_id)
                 ->whereBetween('date', [$from, $to])
@@ -82,6 +79,7 @@ class CalculationController extends Controller implements CalculationInterface
 
     public function clientDebt($from, $to): JsonResponse
     {
+        $to = date('Y-m-d', strtotime($to . ' +1 day'));
         $debts_at_begin = Credit_Debit_History::selectRaw('client_id,
                  SUM(CASE WHEN type = "credit" THEN summa ELSE 0 END) as credit,
                  SUM(CASE WHEN type = "debit" THEN summa ELSE 0 END) as debit')
