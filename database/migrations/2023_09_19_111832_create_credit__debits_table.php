@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('credit__debits', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('date');
+            $table->date('date');
             $table->unsignedInteger('client_id');
             $table->unsignedInteger('store_id');
             $table->unsignedInteger('author_id');
