@@ -28,6 +28,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/getClientInfo/{id}', [ClientController::class, 'getClientInfo']);
     Route::get('/history/{client_id}/{from}/{to}', [\App\Http\Controllers\API\HistoryController::class, 'history']);
     Route::get('/check', [\App\Http\Controllers\API\CheckController::class, 'check']);
+
+    Route::get('/connect', [\App\Http\Controllers\API\CheckController::class, 'connect']);
 });
 
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);
