@@ -17,7 +17,7 @@ class HistoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'date' => Carbon::parse($this->date)->format('Y-m-d'),
+            'date' => $this->date,
             'client' => $this->client?->fio,
             'author' => $this->author?->fio,
             'authorId' => $this->author?->id,
