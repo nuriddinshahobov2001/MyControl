@@ -133,6 +133,7 @@ class Credit_DebitController extends Controller
         $data = Credit_Debit_History::find($id);
 
         return response()->json([
+            'status' => true,
             'data' => [
                 'date' => $data->date,
                 'client_id' => $data->client_id,
@@ -141,8 +142,7 @@ class Credit_DebitController extends Controller
                 'store_name' => $data->store->name,
                 'summa' => $data->summa,
                 'description' => $data->description
-            ]
-
+            ],
         ]);
     }
 
