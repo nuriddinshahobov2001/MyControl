@@ -47,6 +47,7 @@ class ClientController extends Controller
         ]);
     }
 
+
     public function store(Request $request) {
 
         $data = Validator::make($request->all(), [
@@ -116,6 +117,8 @@ class ClientController extends Controller
             'status' => $message ?? false,
         ]);
     }
+
+
 
 
 }
