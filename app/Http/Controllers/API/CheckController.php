@@ -12,7 +12,7 @@ class CheckController extends Controller
 {
     public function check()
     {
-        $checks = Credit_Debit_History::orderByDesc('date')->get();
+        $checks = Credit_Debit_History::orderByDesc('created_at')->get();
 
         return response()->json([
             'message' => true,

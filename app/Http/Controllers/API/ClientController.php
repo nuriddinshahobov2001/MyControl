@@ -47,6 +47,7 @@ class ClientController extends Controller
         ]);
     }
 
+
     public function store(Request $request) {
 
         $data = Validator::make($request->all(), [
@@ -92,6 +93,7 @@ class ClientController extends Controller
            'address' => $client['address'],
            'description' => $client['description'],
            'limit' => (string)$client['limit'],
+           'amount' => (string)$client['amount'],
            'debt' => number_format($client['debt'], 2),
            'all_debit' => number_format($client['all_debit'], 2),
            'all_credit' => number_format($client['all_credit'], 2),
@@ -116,6 +118,8 @@ class ClientController extends Controller
             'status' => $message ?? false,
         ]);
     }
+
+
 
 
 }

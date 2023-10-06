@@ -132,7 +132,7 @@ class CalculationController extends Controller implements CalculationInterface
                 ['client_id', $client->id],
                 ['type', 'debit'],
                 ['hasRecorded', false]
-            ])->whereDate('date', '<=', now()->subDays($client->limit))->get();
+            ])->whereDate('date', '<=', now()->subDays($client->amount))->get();
 
 
             foreach ($history as $h) {

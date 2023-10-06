@@ -66,6 +66,7 @@ class ClientService {
             'debt' => $debt,
             'all_debit' => $debit,
             'all_credit' => $credit,
+            'amount' => $client->amount
         ];
 
     }
