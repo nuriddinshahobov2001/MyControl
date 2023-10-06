@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('clients', ClientController::class);
     Route::apiResource('credit', \App\Http\Controllers\API\Credit_DebitController::class);
     Route::apiResource('store', \App\Http\Controllers\API\StoreController::class);
-    Route::post('/edit/{id}', [\App\Http\Controllers\API\Credit_DebitController::class, 'edit']);
+    Route::post('/credit/edit/{id}', [\App\Http\Controllers\API\Credit_DebitController::class, 'edit']);
     Route::post('/delete/data/', [\App\Http\Controllers\API\Credit_DebitController::class, 'delete']);
     Route::get('/aktSverki/{client_id}/{from}/{to}', [\App\Http\Controllers\API\CalculationController::class, 'aktSverki']);
     Route::get('/debt/{from}/{to}', [\App\Http\Controllers\API\CalculationController::class, 'clientDebt']);
