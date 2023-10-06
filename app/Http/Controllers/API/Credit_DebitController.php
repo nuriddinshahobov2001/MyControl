@@ -128,6 +128,24 @@ class Credit_DebitController extends Controller
 
     }
 
+    public function edit($id)
+    {
+        $data = Credit_Debit_History::find($id);
+
+        return response()->json([
+            'data' => [
+                'date' => $data->date,
+                'client_id' => $data->client_id,
+                'client_name' => $data->client->fio,
+                'store_id' => $data->store_id,
+                'store_name' => $data->store->name,
+                'summa' => $data->summa,
+                'description' => $data->description
+            ]
+
+        ]);
+    }
+
     public function update(CreditDebitRequest $request, $id)
     {
         $data = $request->validated();
