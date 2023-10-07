@@ -11,6 +11,7 @@ use App\Models\Client;
 use App\Models\Credit_Debit;
 use App\Models\Credit_Debit_History;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class Credit_DebitController extends Controller
@@ -59,7 +60,9 @@ class Credit_DebitController extends Controller
             ], 200);
         }
 
-        $credit = $this->creditDebitService->store($data->validated());
+        $data = $data->validated();
+
+        $credit = $this->creditDebitService->store($data);
 
         if ($credit->type === 'credit') {
             $debts = Credit_Debit::where([

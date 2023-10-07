@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 
+use App\Models\Client;
 use App\Models\Credit_Debit;
 use App\Models\Credit_Debit_History;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,14 @@ class CreditDebitService {
 
     public function store($data) {
 
+        $client = Client::find($data['client_id']);
+        if ($data['type'] === 'debit') {
+            $client->limit -= $data['summa'];
+            $client->save();
+        } else {
+            $client->limit += $data['summa'];
+            $client->save();
+        }
 
         Credit_Debit_History::create([
             'date' => $data['date'],
