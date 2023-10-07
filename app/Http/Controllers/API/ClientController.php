@@ -124,7 +124,17 @@ class ClientController extends Controller
         $clients = Client::limit(5)->get();
 
         return response()->json([
-            'status' => true,
+            'message' => true,
+            'clients' => ClientResource::collection($clients)
+        ]);
+    }
+
+    public function searchClient($client)
+    {
+        $clients = Client::where('fio', 'like', '%' . $client . '%')->get();
+
+        return response()->json([
+            'message' => true,
             'clients' => ClientResource::collection($clients)
         ]);
     }

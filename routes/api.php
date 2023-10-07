@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\ClientController;
+use App\Http\Controllers\API\StoreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/history/{client_id}/{from}/{to}', [\App\Http\Controllers\API\HistoryController::class, 'history']);
     Route::get('/check', [\App\Http\Controllers\API\CheckController::class, 'check']);
     Route::get('/connect', [\App\Http\Controllers\API\CheckController::class, 'connect']);
+
+    Route::get('searchClient/{client}', [ClientController::class, 'searchClient']);
+    Route::get('searchStore/{store}', [StoreController::class, 'searchStore']);
+
 });
 
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);

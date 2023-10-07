@@ -66,8 +66,18 @@ class StoreController extends Controller
         $stores = Store::limit(5)->get();
 
         return response()->json([
-            'status' => true,
+            'message' => true,
             'stores' => StoreResource::collection($stores)
+        ]);
+    }
+
+    public function searchStore($store)
+    {
+        $clients = Store::where('name', 'like', '%' . $store . '%')->get();
+
+        return response()->json([
+            'message' => true,
+            'clients' => StoreResource::collection($clients)
         ]);
     }
 }
