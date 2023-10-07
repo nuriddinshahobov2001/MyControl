@@ -119,7 +119,14 @@ class ClientController extends Controller
         ]);
     }
 
+    public function getFiveClients()
+    {
+        $clients = Client::limit(5)->get();
 
-
+        return response()->json([
+            'status' => true,
+            'clients' => ClientResource::collection($clients)
+        ]);
+    }
 
 }

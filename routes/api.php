@@ -17,8 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('clients', ClientController::class);
+    Route::get('getFiveClients', [ClientController::class, 'getFiveClients']);
     Route::apiResource('credit', \App\Http\Controllers\API\Credit_DebitController::class);
     Route::apiResource('store', \App\Http\Controllers\API\StoreController::class);
+    Route::get('getFiveStores', [\App\Http\Controllers\API\StoreController::class, 'getFiveStores']);
     Route::get('/credit/edit/{id}', [\App\Http\Controllers\API\Credit_DebitController::class, 'edit']);
     Route::post('/delete/data/', [\App\Http\Controllers\API\Credit_DebitController::class, 'delete']);
     Route::get('/aktSverki/{client_id}/{from}/{to}', [\App\Http\Controllers\API\CalculationController::class, 'aktSverki']);

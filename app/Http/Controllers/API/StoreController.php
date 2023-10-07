@@ -61,5 +61,13 @@ class StoreController extends Controller
         ]);
     }
 
+    public function getFiveStores()
+    {
+        $stores = Store::limit(5)->get();
 
+        return response()->json([
+            'status' => true,
+            'stores' => StoreResource::collection($stores)
+        ]);
+    }
 }
