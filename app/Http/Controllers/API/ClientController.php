@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
+use App\Http\Resources\ClientHistoryResource;
 use App\Http\Resources\ClientResource;
 use App\Http\Resources\GetClientInfoResource;
 use App\Http\Services\ClientService;
@@ -146,6 +147,23 @@ class ClientController extends Controller
             'message' => true,
             'clients' => ClientResource::collection($clients)
         ]);
+    }
+
+    public function clientHistory($id)
+    {
+        $history = Credit_Debit_History::where('client_id', $id)->get();
+
+        if ($history) {
+            return response()->json([
+                'message' => true,
+                'history' => ClientHistoryResource::collection($history),
+            ]);
+        } else {
+            return response()->json([
+                'message' => false,
+                'info' => 'Такого клиента не существует!',
+            ]);
+        }
     }
 
 }

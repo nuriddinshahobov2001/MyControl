@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('clients', ClientController::class);
+    Route::get('clientHistory/{id}', [ClientController::class, 'clientHistory']);
     Route::get('getFiveClients', [ClientController::class, 'getFiveClients']);
     Route::apiResource('credit', \App\Http\Controllers\API\Credit_DebitController::class);
     Route::apiResource('store', \App\Http\Controllers\API\StoreController::class);
