@@ -166,4 +166,24 @@ class ClientController extends Controller
         }
     }
 
+    public function allDebitCreditOfClient($id)
+    {
+        $data = Credit_Debit_History::selectRaw('
+                 SUM(CASE WHEN type = "credit" THEN summa ELSE 0 END) as credit,
+                 SUM(CASE WHEN type = "debit" THEN summa ELSE 0 END) as debit')
+            ->where('client_id', $id)
+            ->get();
+
+        $client = Client::find($id);
+        $debt = $data[0]->debit - $data[0]->credit;
+
+        return response()->json([
+           'message' => true,
+           'all_debit' =>  $data[0]->debit,
+           'all_credit' => $data[0]->credit,
+           'debt' => $debt,
+           'limit' => $client->limit,
+        ]);
+    }
+
 }

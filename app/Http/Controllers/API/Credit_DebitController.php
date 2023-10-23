@@ -11,7 +11,6 @@ use App\Models\Client;
 use App\Models\Credit_Debit;
 use App\Models\Credit_Debit_History;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class Credit_DebitController extends Controller

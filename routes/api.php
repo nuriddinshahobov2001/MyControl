@@ -20,24 +20,28 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('clients', ClientController::class);
     Route::get('clientHistory/{id}', [ClientController::class, 'clientHistory']);
     Route::get('getFiveClients', [ClientController::class, 'getFiveClients']);
+    Route::get('searchClient/{client}', [ClientController::class, 'searchClient']);
+    Route::get('allDebitCreditOfClient/{id}', [ClientController::class, 'allDebitCreditOfClient']);
+
     Route::apiResource('credit', \App\Http\Controllers\API\Credit_DebitController::class);
+
     Route::apiResource('store', \App\Http\Controllers\API\StoreController::class);
     Route::get('getFiveStores', [\App\Http\Controllers\API\StoreController::class, 'getFiveStores']);
+    Route::get('searchStore/{store}', [StoreController::class, 'searchStore']);
+
     Route::get('/credit/edit/{id}', [\App\Http\Controllers\API\Credit_DebitController::class, 'edit']);
     Route::post('/delete/data/', [\App\Http\Controllers\API\Credit_DebitController::class, 'delete']);
+
     Route::get('/aktSverki/{client_id}/{from}/{to}', [\App\Http\Controllers\API\CalculationController::class, 'aktSverki']);
     Route::get('/debt/{from}/{to}', [\App\Http\Controllers\API\CalculationController::class, 'clientDebt']);
     Route::get('/calculate', [\App\Http\Controllers\API\CalculationController::class, 'calculate']);
     Route::get('/pdf', [\App\Http\Controllers\API\CalculationController::class, 'pdf']);
     Route::get('/store/history/{id}', [\App\Http\Controllers\API\CalculationController::class, 'storeHistory']);
     Route::get('/getClientInfo/{id}', [ClientController::class, 'getClientInfo']);
+
     Route::get('/history/{client_id}/{from}/{to}', [\App\Http\Controllers\API\HistoryController::class, 'history']);
     Route::get('/check', [\App\Http\Controllers\API\CheckController::class, 'check']);
     Route::get('/connect', [\App\Http\Controllers\API\CheckController::class, 'connect']);
-
-    Route::get('searchClient/{client}', [ClientController::class, 'searchClient']);
-    Route::get('searchStore/{store}', [StoreController::class, 'searchStore']);
-
 });
 
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);

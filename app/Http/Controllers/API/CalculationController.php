@@ -26,7 +26,9 @@ class CalculationController extends Controller implements CalculationInterface
                 ->whereBetween('date', [$from, $to])
                 ->get();
 
-            $debt_credit = Credit_Debit_History::selectRaw('SUM(CASE WHEN type = "credit" THEN summa ELSE 0 END) as credit, SUM(CASE WHEN type = "debit" THEN summa ELSE 0 END) as debit')
+            $debt_credit = Credit_Debit_History::selectRaw('
+                    SUM(CASE WHEN type = "credit" THEN summa ELSE 0 END) as credit,
+                    SUM(CASE WHEN type = "debit" THEN summa ELSE 0 END) as debit')
                 ->where([
                     ['date', '<', $from],
                     ['client_id', $client_id]
@@ -158,8 +160,6 @@ class CalculationController extends Controller implements CalculationInterface
 
         Storage::disk('public')->put($imagePath, $pdf->output());
         $url = Storage::url($imagePath);
-
-
 
         return response()->json([
             'url' => $url
