@@ -23,7 +23,7 @@ class StoreService {
     public function update($id, $data) {
         $user = Store::find($id);
 
-        
+
         $user->update([
             'name' => $data['name'],
             'address' => $data['address'],
