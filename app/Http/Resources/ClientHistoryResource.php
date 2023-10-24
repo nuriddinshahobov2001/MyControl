@@ -17,10 +17,14 @@ class ClientHistoryResource extends JsonResource
         return [
             'id' => $this->id,
             'date' => $this->date,
+            'store_id' => $this->store_id,
             'store' => $this->store->name,
+            'author_id' => $this->author_id,
             'author' => $this->author->fio,
             'summa' => $this->summa,
-            'type' => $this->type
+            'type' => $this->type,
+            'client_id' => $this->client_id,
+            'client' => $this->client->fio
         ];
     }
 }
