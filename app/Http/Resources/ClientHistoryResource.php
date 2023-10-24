@@ -25,7 +25,7 @@ class ClientHistoryResource extends JsonResource
             'type' => $this->type,
             'client_id' => $this->client_id,
             'client' => $this->client->fio,
-            'desc' => $this->description
+            'desc' => $this->description ?? ''
         ];
     }
 }
