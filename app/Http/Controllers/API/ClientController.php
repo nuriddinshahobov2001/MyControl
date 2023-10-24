@@ -151,7 +151,7 @@ class ClientController extends Controller
 
     public function clientHistory($id)
     {
-        $history = Credit_Debit_History::where('client_id', $id)->orderByDesc('date')->get();
+        $history = Credit_Debit_History::where('client_id', $id)->orderByDesc('created_at')->get();
 
         if ($history) {
             return response()->json([
