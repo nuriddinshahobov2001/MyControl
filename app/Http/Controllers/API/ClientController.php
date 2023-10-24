@@ -186,4 +186,17 @@ class ClientController extends Controller
         ]);
     }
 
+    public function todayHistory($id)
+    {
+        $history = Credit_Debit_History::where([
+            ['client_id', $id],
+            ['date', today()]
+        ])->get();
+
+        return response()->json([
+            'message' => true,
+            'history' => ClientHistoryResource::collection($history)
+        ]);
+    }
+
 }
