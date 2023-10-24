@@ -16,7 +16,7 @@ class ClientHistoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'date' => $this->date,
+            'date' => date('d-m-Y', strtotime($this->date)),
             'store_id' => $this->store_id,
             'store' => $this->store->name,
             'author_id' => $this->author_id,
