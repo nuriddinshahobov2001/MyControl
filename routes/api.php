@@ -43,6 +43,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/history/{client_id}/{from}/{to}', [\App\Http\Controllers\API\HistoryController::class, 'history']);
     Route::get('/check', [\App\Http\Controllers\API\CheckController::class, 'check']);
     Route::get('/connect', [\App\Http\Controllers\API\CheckController::class, 'connect']);
+
+    Route::get('user', [\App\Http\Controllers\API\UserController::class, 'index']);
+    Route::post('user', [\App\Http\Controllers\API\UserController::class, 'store']);
+    Route::put('user/{id}', [\App\Http\Controllers\API\UserController::class, 'update']);
+    Route::delete('user/{id}', [\App\Http\Controllers\API\UserController::class, 'destroy']);
 });
 
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);
