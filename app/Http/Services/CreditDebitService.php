@@ -78,6 +78,30 @@ class CreditDebitService {
         return $credit;
     }
 
+    public function delete($request)
+    {
+        $data = Credit_Debit::where('id', $request->id)->first();
+        $history = Credit_Debit_History::where('id', $request->id)->first();
+
+        if ($data != null) {
+            $client = Client::find($data['client_id']);
+
+            if ($data['type'] === 'debit') {
+                $client->limit += $data['summa'];
+                $client->save();
+            } elseif ($data['type'] === 'credit') {
+                $client->limit -= $data['summa'];
+                $client->save();
+            }
+
+            $data->delete();
+            $history->delete();
+
+           return true;
+        }
+        return false;
+    }
+
 }
 
 ?>

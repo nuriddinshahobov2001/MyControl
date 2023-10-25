@@ -160,12 +160,9 @@ class Credit_DebitController extends Controller
 
     public function delete(Request $request)
     {
-        $data = Credit_Debit::where('id', $request->id)->first();
-        $history = Credit_Debit_History::where('id', $request->id)->first();
-        if ($data != null) {
-            $data->delete();
-            $history->delete();
+        $res = $this->creditDebitService->delete($request);
 
+        if ($res) {
             return response()->json([
                 'message' => true,
                 'info' => "Успешно удалено!"
