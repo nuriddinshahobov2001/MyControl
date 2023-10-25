@@ -18,13 +18,13 @@ class CreditDebitService {
     public function store($data) {
 
         $client = Client::find($data['client_id']);
-        if ($data['type'] === 'debit') {
-            $client->limit -= $data['summa'];
-            $client->save();
-        } else {
-            $client->limit += $data['summa'];
-            $client->save();
-        }
+//        if ($data['type'] === 'debit') {
+//            $client->limit -= $data['summa'];
+//            $client->save();
+//        } else {
+//            $client->limit += $data['summa'];
+//            $client->save();
+//        }
 
         Credit_Debit_History::create([
             'date' => $data['date'],

@@ -62,6 +62,7 @@ class Credit_DebitController extends Controller
         $data = $data->validated();
 
         $credit = $this->creditDebitService->store($data);
+        $client = Client::find($credit->client_id);
 
         if ($credit->type === 'credit') {
             $debts = Credit_Debit::where([
@@ -71,9 +72,9 @@ class Credit_DebitController extends Controller
             ])->get();
 
             if ($credit->summa > 0 && count($debts) == 0) {
-                $user = Client::find($credit->client_id);
-                $user->balance += $credit->summa;
-                $user->save();
+                $client->balance += $credit->summa;
+                $client->limit += $credit->summa;
+                $client->save();
             }
 
             $lastKey = count($debts) - 1;
@@ -85,7 +86,6 @@ class Credit_DebitController extends Controller
                     $debt->hasRecorded = true;
                     $debt->save();
 
-
                 } elseif ($credit->summa < $debt->summa) {
                     $debt->summa -= $credit->summa;
                     $debt->save();
@@ -95,29 +95,30 @@ class Credit_DebitController extends Controller
 
                 if ($key === $lastKey) {
                     if ($credit->summa > 0) {
-
-                        $user = Client::find($credit->client_id);
-                        $user->balance += $credit->summa;
-                        $user->save();
+                        $client->balance +=$credit->summa;
+                        $client->limit += $credit->summa;
+                        $client->save();
                     }
                 }
             }
         } else {
-            $client = Client::find($credit->client_id);
             if ($client) {
-                if ($client->balance > 0) {
-                    if ($client->balance > $credit->summa) {
+                if ($client->balance >= 0) {
+                    if ($client->balance >= $credit->summa) {
                         $client->balance -= $credit->summa;
+                        $client->limit -= $credit->summa;
                         $client->save();
 
                         $credit->hasRecorded = true;
                         $credit->save();
                     } else {
-                        $credit->summa -= $client->balance;
-                        $credit->save();
-
+                        $client->limit -= $credit->summa;
                         $client->balance = 0;
                         $client->save();
+
+                        $credit->summa -= $client->balance;
+                        $credit->save();
+dd($credit);
                     }
                 }
             }

@@ -18,8 +18,8 @@ class CreditDebitResource extends JsonResource
         return [
             'id' => $this->id,
             'date' => Carbon::parse($this->date)->format('Y-m-d'),
-            'client_id' => $this->client->fio,
-            'author_id' => $this->author->fio,
+            'client_id' => $this->client?->fio,
+            'author_id' => $this->author?->fio,
             'store_id' => $this->store?->name,
             'summa' => (double)$this->summa,
             'description' => $this->description,

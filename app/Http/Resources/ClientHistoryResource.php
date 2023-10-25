@@ -18,13 +18,13 @@ class ClientHistoryResource extends JsonResource
             'id' => $this->id,
             'date' => date('d-m-Y', strtotime($this->date)),
             'store_id' => $this->store_id,
-            'store' => $this->store->name,
+            'store' => $this->store?->name,
             'author_id' => $this->author_id,
-            'author' => $this->author->fio,
+            'author' => $this->author?->fio,
             'summa' => $this->summa,
             'type' => $this->type,
             'client_id' => $this->client_id,
-            'client' => $this->client->fio,
+            'client' => $this->client?->fio,
             'desc' => $this->description ?? ''
         ];
     }
