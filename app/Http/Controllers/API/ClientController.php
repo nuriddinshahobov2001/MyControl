@@ -191,7 +191,7 @@ class ClientController extends Controller
         $history = Credit_Debit_History::where([
             ['client_id', $id],
             ['date', today()]
-        ])->get();
+        ])->orderByDesc('created_at')->get();
 
         return response()->json([
             'message' => true,
