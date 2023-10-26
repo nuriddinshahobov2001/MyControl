@@ -73,7 +73,6 @@ class Credit_DebitController extends Controller
 
             if ($credit->summa > 0 && count($debts) == 0) {
                 $client->balance += $credit->summa;
-                $client->limit += $credit->summa;
                 $client->save();
             }
 
@@ -82,9 +81,6 @@ class Credit_DebitController extends Controller
             foreach ($debts as $key => $debt) {
 
                 if ($debt && $credit->summa >= $debt->summa) {
-                    $client->limit += $credit->summa;
-                    $client->save();
-
                     $credit->summa -= $debt->summa;
                     $debt->hasRecorded = true;
                     $debt->save();
@@ -92,16 +88,12 @@ class Credit_DebitController extends Controller
                 } elseif ($credit->summa < $debt->summa) {
                     $debt->summa -= $credit->summa;
                     $debt->save();
-
-                    $client->limit += $credit->summa;
-                    $client->save();
                     $credit->summa = 0;
                 }
 
                 if ($key === $lastKey) {
                     if ($credit->summa > 0) {
                         $client->balance +=$credit->summa;
-                        $client->limit += $credit->summa;
                         $client->save();
                     }
                 }
@@ -111,14 +103,11 @@ class Credit_DebitController extends Controller
                 if ($client->balance >= 0) {
                     if ($client->balance >= $credit->summa) {
                         $client->balance -= $credit->summa;
-                        $client->limit -= $credit->summa;
                         $client->save();
 
                         $credit->hasRecorded = true;
                         $credit->save();
                     } else {
-                        $client->limit -= $credit->summa;
-
                         $credit->summa -= $client->balance;
                         $credit->save();
 

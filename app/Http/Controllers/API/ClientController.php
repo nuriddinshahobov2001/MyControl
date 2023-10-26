@@ -176,13 +176,13 @@ class ClientController extends Controller
 
         $client = Client::find($id);
         $debt = $data[0]->debit - $data[0]->credit;
-
+        $limit = $client->limit - $debt;
         return response()->json([
            'message' => true,
-           'all_debit' =>  $data[0]->debit,
+           'all_debit' => $data[0]->debit,
            'all_credit' => $data[0]->credit,
            'debt' => $debt,
-           'limit' => $client->limit,
+           'limit' => $limit,
         ]);
     }
 
