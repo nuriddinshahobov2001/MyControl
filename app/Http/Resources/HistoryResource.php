@@ -23,7 +23,8 @@ class HistoryResource extends JsonResource
             'authorId' => $this->author->id ?? 0,
             'client_id' => $this->client->id ?? 0,
             'type' => $this->type,
-            'summa' => $this->summa
+            'summa' => $this->summa,
+            'desc' => $this->desc,
         ];
     }
 }
