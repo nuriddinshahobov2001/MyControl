@@ -107,7 +107,7 @@ class CalculationController extends Controller implements CalculationInterface
             }
 
             $clientDebts[] = [
-                'client' => $fio?->fio ?? 'Удалённый пользователь',
+                'client' => $fio?->fio ?? 'Удалённый клиент',
                 'debit' => $debt->debit,
                 'credit' => $debt->credit,
                 'debt_at_begin' => number_format($debt_at_begin, 2) ?? 0,
