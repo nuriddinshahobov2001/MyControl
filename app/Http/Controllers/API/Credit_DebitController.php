@@ -63,6 +63,11 @@ class Credit_DebitController extends Controller
 
         $credit = $this->creditDebitService->store($data);
         $client = Client::find($credit->client_id);
+        if (!$client) {
+            return response()->json([
+                'message' => 'Такой клиент не существует'
+            ]);
+        }
 
         if ($credit->type === 'credit') {
             $debts = Credit_Debit::where([

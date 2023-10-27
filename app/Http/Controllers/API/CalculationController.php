@@ -64,7 +64,7 @@ class CalculationController extends Controller implements CalculationInterface
                 'debt_at_begin' => number_format($debt_at_begin,  2),
                 'debt_at_finish' => number_format($res, 2),
                 'history' => HistoryResource::collection($histories),
-                'url' => url($url)
+//                'url' => url($url)
             ]);
         } else {
             return response()->json([
