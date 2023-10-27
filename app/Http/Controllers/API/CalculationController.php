@@ -118,6 +118,7 @@ class CalculationController extends Controller implements CalculationInterface
         }
 
         return response()->json([
+            'message' => true,
             'client_debts' => $clientDebts
         ]);
 
