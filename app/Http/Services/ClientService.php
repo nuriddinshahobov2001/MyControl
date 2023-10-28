@@ -45,7 +45,7 @@ class ClientService {
             return Client::find($id)?->delete();
         }
 
-        return "Нельзя удалить этого клиента!";
+        return false;
 
     }
 
