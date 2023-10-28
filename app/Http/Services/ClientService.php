@@ -17,7 +17,7 @@ class ClientService {
            'fio' => $data['fio'],
            'address' => $data['address'],
            'phone' => $data['phone'],
-           'description' => $data['description'],
+           'description' => $data['description'] ?? '',
            'limit' => $data['limit'],
            'amount' => $data['amount']
        ]);
@@ -36,8 +36,17 @@ class ClientService {
 
         return $user;
     }
-    public function delete($id) {
-        return Client::find($id)?->delete();
+
+    public function delete($id)
+    {
+        $credit = Credit_Debit_History::where('client_id', $id)->first();
+
+        if ($credit === null) {
+            return Client::find($id)?->delete();
+        }
+
+        return "Нельзя удалить этого клиента!";
+
     }
 
     public function show($id) {

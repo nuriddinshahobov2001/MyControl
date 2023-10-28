@@ -22,7 +22,7 @@ class CreditDebitService {
             'author_id' => Auth::id(),
             'store_id' => $data['store_id'],
             'summa' => $data['summa'],
-            'description' => $data['description'],
+            'description' => $data['description'] ?? '' ,
             'type' => $data['type']
         ]);
 
@@ -32,7 +32,7 @@ class CreditDebitService {
            'author_id' => Auth::id(),
            'store_id' => $data['store_id'],
            'summa' => $data['summa'],
-           'description' => $data['description'],
+           'description' => $data['description'] ?? '',
            'type' => $data['type']
         ]);
     }
@@ -47,7 +47,7 @@ class CreditDebitService {
             'author_id' => Auth::id(),
             'store_id' => $data['store_id'],
             'summa' => $data['summa'],
-            'description' => $data['description'],
+            'description' => $data['description'] ?? '',
             'type' => $data['type']
         ]);
         $creditHistory->type = $data['type'];
@@ -59,7 +59,7 @@ class CreditDebitService {
             'author_id' => Auth::id(),
             'store_id' => $data['store_id'],
             'summa' => $data['summa'],
-            'description' => $data['description'],
+            'description' => $data['description'] ?? '',
             'type' => $data['type']
         ]);
 
