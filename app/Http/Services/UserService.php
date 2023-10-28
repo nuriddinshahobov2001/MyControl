@@ -24,6 +24,7 @@ class UserService {
                 'fio' => $data['fio'],
                 'login' => $data['login'],
                 'phone' => $data['phone'],
+                'password' => Hash::make($data['password'])
             ]);
 
             return true;
