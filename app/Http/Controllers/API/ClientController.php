@@ -10,6 +10,7 @@ use App\Http\Resources\GetClientInfoResource;
 use App\Http\Services\ClientService;
 use App\Models\Client;
 use App\Models\Credit_Debit_History;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -40,7 +41,8 @@ class ClientController extends Controller
         ]);
     }
 
-    public function show($id) {
+    public function show($id): JsonResponse
+    {
         $client = $this->clientService->show($id);
 
         return response()->json([
@@ -49,8 +51,8 @@ class ClientController extends Controller
     }
 
 
-    public function store(Request $request) {
-
+    public function store(Request $request): JsonResponse
+    {
         $data = Validator::make($request->all(), [
             'fio' => 'required',
             'address' => 'required',
@@ -84,8 +86,8 @@ class ClientController extends Controller
     }
 
 
-    public function getClientInfo($id) {
-
+    public function getClientInfo($id): JsonResponse
+    {
         $client = $this->clientService->getClientInfo($id);
 
         return response()->json([
@@ -102,7 +104,8 @@ class ClientController extends Controller
     }
 
 
-    public function update(ClientRequest $request, $id) {
+    public function update(ClientRequest $request, $id): JsonResponse
+    {
         $data = $request->validated();
         $client = $this->clientService->update($id, $data);
 
@@ -112,7 +115,8 @@ class ClientController extends Controller
         ]);
     }
 
-    public function destroy($id) {
+    public function destroy($id): JsonResponse
+    {
         $message = $this->clientService->delete($id);
 
         return response()->json([
@@ -120,18 +124,9 @@ class ClientController extends Controller
         ]);
     }
 
-    public function getFiveClients()
+    public function getFiveClients(): JsonResponse
     {
-        $clients = DB::table('clients')
-            ->select('clients.id', 'clients.fio', 'clients.limit', 'clients.amount', 'clients.address',
-                'clients.description', 'clients.phone', 'clients.balance',
-                DB::raw('SUM(CASE WHEN credit__debit__histories.type = "debit" THEN credit__debit__histories.summa ELSE 0 END) -
-                       SUM(CASE WHEN credit__debit__histories.type = "credit" THEN credit__debit__histories.summa ELSE 0 END) as debt'))
-            ->leftJoin('credit__debit__histories', 'clients.id', '=', 'credit__debit__histories.client_id')
-            ->groupBy('clients.id', 'clients.fio', 'clients.limit', 'clients.amount', 'clients.address',
-                'clients.description', 'clients.phone', 'clients.balance')
-            ->limit(5)
-            ->get();
+        $clients = $this->clientService->getFiveClients();
 
         return response()->json([
             'message' => true,
@@ -139,7 +134,7 @@ class ClientController extends Controller
         ]);
     }
 
-    public function searchClient($client)
+    public function searchClient($client): JsonResponse
     {
         $clients = Client::where('fio', 'like', '%' . $client . '%')->get();
 
@@ -149,7 +144,7 @@ class ClientController extends Controller
         ]);
     }
 
-    public function clientHistory($id)
+    public function clientHistory($id): JsonResponse
     {
         $history = Credit_Debit_History::where('client_id', $id)->orderByDesc('created_at')->get();
 
@@ -166,13 +161,9 @@ class ClientController extends Controller
         }
     }
 
-    public function allDebitCreditOfClient($id)
+    public function allDebitCreditOfClient($id): JsonResponse
     {
-        $data = Credit_Debit_History::selectRaw('
-                 SUM(CASE WHEN type = "credit" THEN summa ELSE 0 END) as credit,
-                 SUM(CASE WHEN type = "debit" THEN summa ELSE 0 END) as debit')
-            ->where('client_id', $id)
-            ->get();
+        $data = $this->clientService->allDebitCreditOfClient($id);
 
         $client = Client::find($id);
         $debt = $data[0]->debit - $data[0]->credit;
@@ -186,12 +177,9 @@ class ClientController extends Controller
         ]);
     }
 
-    public function todayHistory($id)
+    public function todayHistory($id): JsonResponse
     {
-        $history = Credit_Debit_History::where([
-            ['client_id', $id],
-            ['date', today()]
-        ])->orderByDesc('created_at')->get();
+        $history = $this->clientService->todayHistory($id);
 
         return response()->json([
             'message' => true,

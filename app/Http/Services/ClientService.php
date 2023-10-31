@@ -5,6 +5,7 @@ namespace App\Http\Services;
 use App\Models\Client;
 use App\Models\Credit_Debit_History;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class ClientService {
 
@@ -80,6 +81,36 @@ class ClientService {
 
     }
 
+    public function getFiveClients()
+    {
+        return DB::table('clients')
+            ->select('clients.id', 'clients.fio', 'clients.limit', 'clients.amount', 'clients.address',
+                'clients.description', 'clients.phone', 'clients.balance',
+                DB::raw('SUM(CASE WHEN credit__debit__histories.type = "debit" THEN credit__debit__histories.summa ELSE 0 END) -
+                       SUM(CASE WHEN credit__debit__histories.type = "credit" THEN credit__debit__histories.summa ELSE 0 END) as debt'))
+            ->leftJoin('credit__debit__histories', 'clients.id', '=', 'credit__debit__histories.client_id')
+            ->groupBy('clients.id', 'clients.fio', 'clients.limit', 'clients.amount', 'clients.address',
+                'clients.description', 'clients.phone', 'clients.balance')
+            ->limit(5)
+            ->get();
+    }
+
+    public function allDebitCreditOfClient($id)
+    {
+        return Credit_Debit_History::selectRaw('
+                 SUM(CASE WHEN type = "credit" THEN summa ELSE 0 END) as credit,
+                 SUM(CASE WHEN type = "debit" THEN summa ELSE 0 END) as debit')
+            ->where('client_id', $id)
+            ->get();
+    }
+
+    public function todayHistory($id)
+    {
+        return Credit_Debit_History::where([
+            ['client_id', $id],
+            ['date', today()]
+        ])->orderByDesc('created_at')->get();
+    }
 
 }
 

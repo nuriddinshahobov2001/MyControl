@@ -46,6 +46,8 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
+        if (!$user) abort(200, 'Такого пользователя не существует!');
+
         $res = $this->userService->update($user, $request);
 
         return response([

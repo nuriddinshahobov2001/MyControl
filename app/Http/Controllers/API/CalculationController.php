@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Interfaces\CalculationInterface;
-use App\Http\Resources\CreditDebitResource;
 use App\Http\Resources\HistoryResource;
 use App\Models\Credit_Debit;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -129,7 +128,7 @@ class CalculationController extends Controller implements CalculationInterface
             'message' => true,
             'all_debit' => $allDebitCredit[0]->debit,
             'all_credit' => $allDebitCredit[0]->credit,
-            'all_debt' => $allDebt,
+            'all_debt' => (string) $allDebt,
             'client_debts' => $clientDebts
         ]);
 
