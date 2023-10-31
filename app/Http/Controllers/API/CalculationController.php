@@ -95,6 +95,14 @@ class CalculationController extends Controller implements CalculationInterface
             ->groupBy('client_id')
             ->get();
 
+        $allDebitCredit = Credit_Debit_History::selectRaw('
+            SUM(CASE WHEN type = "credit" THEN summa ELSE 0 END) as credit,
+            SUM(CASE WHEN type = "debit" THEN summa ELSE 0 END) as debit
+        ')->where([
+            ['date', '>=', $from],
+            ['date', '<=', $to],
+        ])->get();
+
         $clientDebts = [];
         $c = 0;
         foreach ($debts as $debt) {
@@ -119,6 +127,8 @@ class CalculationController extends Controller implements CalculationInterface
 
         return response()->json([
             'message' => true,
+            'all_debit' => $allDebitCredit[0]->debit,
+            'all_credit' => $allDebitCredit[0]->credit,
             'client_debts' => $clientDebts
         ]);
 
