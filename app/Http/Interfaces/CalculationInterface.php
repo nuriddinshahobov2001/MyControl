@@ -14,7 +14,4 @@ interface CalculationInterface {
 
     public function pdf() : JsonResponse;
 
-    public function storeHistory($id) : JsonResponse;
-
-
 }

@@ -16,7 +16,6 @@ class CheckResource extends JsonResource
     {
         return [
             'author' => $this->author?->fio,
-            'store' => $this->store?->name,
             'summa' => $this->summa,
             'date' => $this->created_at->format('d-m-Y H:i:s'),
             'type' => $this->type

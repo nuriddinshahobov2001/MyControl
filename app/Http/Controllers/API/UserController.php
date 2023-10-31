@@ -7,16 +7,19 @@ use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Services\UserService;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    private UserService $userService;
+
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
     }
 
-    public function index()
+    public function index(): JsonResponse
     {
         $users = User::all();
 
@@ -50,7 +53,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function destroy($id) :JsonResponse
     {
         User::find($id)->delete();
 

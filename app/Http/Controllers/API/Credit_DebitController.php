@@ -37,7 +37,6 @@ class Credit_DebitController extends Controller
         $data = Validator::make($request->all(), [
             'date' => 'required|date_format:Y-m-d',
             'client_id' => 'required|integer',
-            'store_id' => 'required|integer',
             'summa' => 'required|numeric',
             'description' => 'nullable',
             'type' => 'in:credit,debit'
@@ -46,8 +45,6 @@ class Credit_DebitController extends Controller
             'date.date' => 'Значение поля дата не является датой.',
             'client_id.required' => 'Поле клиент объязательно для заполнения.',
             'client_id.integer' => 'Значение поле клиент должно быть целым числом.',
-            'store_id.required' => 'Поле магазин объязательно для заполнения.',
-            'store_id.integer' => 'Значение поле магазин должно быть целым числом.',
             'summa.required' => 'Поле сумма объязательно для заполнения.',
             'summa.numeric' => 'Значение поле сумма должно быть числом.'
         ]);
@@ -139,8 +136,6 @@ class Credit_DebitController extends Controller
                 'date' => $data?->date,
                 'client_id' => $data?->client_id,
                 'client_name' => $data?->client?->fio,
-                'store_id' => $data?->store_id,
-                'store_name' => $data?->store?->name,
                 'summa' => $data?->summa,
                 'description' => $data?->description
             ],

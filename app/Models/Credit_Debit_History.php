@@ -28,8 +28,4 @@ class Credit_Debit_History extends Model
         return $this->belongsTo(Client::class);
     }
 
-    public function store() {
-        return $this->belongsTo(Store::class);
-    }
-
 }
