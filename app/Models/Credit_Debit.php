@@ -18,9 +18,4 @@ class Credit_Debit extends Model
         return $this->belongsTo(Client::class);
     }
 
-    public function store() {
-        return $this->belongsTo(Store::class);
-    }
-
-
 }

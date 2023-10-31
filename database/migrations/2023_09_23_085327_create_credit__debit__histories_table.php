@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->date('date');
             $table->unsignedInteger('client_id');
-            $table->unsignedInteger('store_id');
             $table->unsignedInteger('author_id');
             $table->decimal('summa');
             $table->text('description')->nullable();

@@ -1,8 +1,6 @@
 <?php
 
 use App\Http\Controllers\API\ClientController;
-use App\Http\Controllers\API\StoreController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,10 +23,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('allDebitCreditOfClient/{id}', [ClientController::class, 'allDebitCreditOfClient']);
 
     Route::apiResource('credit', \App\Http\Controllers\API\Credit_DebitController::class);
-
-    Route::apiResource('store', \App\Http\Controllers\API\StoreController::class);
-    Route::get('getFiveStores', [\App\Http\Controllers\API\StoreController::class, 'getFiveStores']);
-    Route::get('searchStore/{store}', [StoreController::class, 'searchStore']);
 
     Route::get('/credit/edit/{id}', [\App\Http\Controllers\API\Credit_DebitController::class, 'edit']);
     Route::post('/delete/data/', [\App\Http\Controllers\API\Credit_DebitController::class, 'delete']);

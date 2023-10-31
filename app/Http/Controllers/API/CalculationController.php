@@ -178,15 +178,6 @@ class CalculationController extends Controller implements CalculationInterface
         ]);
     }
 
-
-    public function storeHistory($id): JsonResponse
-    {
-       $history =  Credit_Debit_History::where('store_id', $id)->get();
-
-        return response()->json([
-            'history' => $history
-        ]);
-    }
 }
 
 

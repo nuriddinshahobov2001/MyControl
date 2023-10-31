@@ -20,7 +20,6 @@ class CreditDebitService {
             'date' => $data['date'],
             'client_id' => $data['client_id'],
             'author_id' => Auth::id(),
-            'store_id' => $data['store_id'],
             'summa' => $data['summa'],
             'description' => $data['description'] ?? '' ,
             'type' => $data['type']
@@ -30,7 +29,6 @@ class CreditDebitService {
            'date' => $data['date'],
            'client_id' => $data['client_id'],
            'author_id' => Auth::id(),
-           'store_id' => $data['store_id'],
            'summa' => $data['summa'],
            'description' => $data['description'] ?? '',
            'type' => $data['type']
@@ -45,7 +43,6 @@ class CreditDebitService {
             'date' => $data['date'],
             'client_id' => $data['client_id'],
             'author_id' => Auth::id(),
-            'store_id' => $data['store_id'],
             'summa' => $data['summa'],
             'description' => $data['description'] ?? '',
             'type' => $data['type']
@@ -57,7 +54,6 @@ class CreditDebitService {
             'date' => $data['date'],
             'client_id' => $data['client_id'],
             'author_id' => Auth::id(),
-            'store_id' => $data['store_id'],
             'summa' => $data['summa'],
             'description' => $data['description'] ?? '',
             'type' => $data['type']
@@ -94,4 +90,3 @@ class CreditDebitService {
 
 }
 
-?>

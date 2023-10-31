@@ -19,7 +19,6 @@ class GetClientInfoResource extends JsonResource
             'date' => Carbon::parse($this->date)->format('Y-m-d'),
             'summa' => $this->summa,
             'author' => $this->author?->fio,
-            'store' => $this->store?->name
         ];
     }
 }
