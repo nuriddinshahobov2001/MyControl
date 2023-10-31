@@ -75,7 +75,6 @@ class CalculationController extends Controller implements CalculationInterface
                 'url' => null
             ]);
         }
-
     }
 
     public function clientDebt($from, $to): JsonResponse
@@ -124,11 +123,13 @@ class CalculationController extends Controller implements CalculationInterface
 
             $c++;
         }
+        $allDebt = $allDebitCredit[0]->debit - $allDebitCredit[0]->credit;
 
         return response()->json([
             'message' => true,
             'all_debit' => $allDebitCredit[0]->debit,
             'all_credit' => $allDebitCredit[0]->credit,
+            'all_debt' => $allDebt,
             'client_debts' => $clientDebts
         ]);
 
