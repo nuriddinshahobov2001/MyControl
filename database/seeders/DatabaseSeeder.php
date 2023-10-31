@@ -27,11 +27,5 @@ class DatabaseSeeder extends Seeder
                 'password' => 'password',
                 'phone' => '937711891'
             ])->assignRole('admin');
-         \App\Models\User::create([
-             'fio' => 'Test User',
-             'login' => 'user',
-             'password' => Hash::make('password'),
-             'phone' => '927711891'
-         ])->assignRole('user');
     }
 }
