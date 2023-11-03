@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string('password');
             $table->string('img')->nullable();
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
