@@ -59,7 +59,7 @@ class ClientService
 
         $debt = $credits[0]->debit - $credits[0]->credit;
 
-        if ($debt != 0) return false;
+        if ($debt != 0) return $debt;
 
         return Client::find($id)?->delete();
     }

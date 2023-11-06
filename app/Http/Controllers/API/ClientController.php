@@ -112,8 +112,15 @@ class ClientController extends Controller
     {
         $message = $this->clientService->delete($id);
 
+        if ($message === true) {
+            return response()->json([
+                'status' => $message ?? false,
+            ]);
+        }
+
         return response()->json([
-            'status' => $message ?? false,
+            'message' => false,
+            'debt' => $message
         ]);
     }
 
