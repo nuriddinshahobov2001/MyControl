@@ -7,9 +7,11 @@ use App\Models\Credit_Debit_History;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
-class ClientService {
+class ClientService
+{
 
-    public function index() {
+    public function index()
+    {
         return DB::table('clients')
             ->select('clients.id', 'clients.fio', 'clients.limit', 'clients.amount', 'clients.address',
                 'clients.description', 'clients.phone', 'clients.balance',
@@ -21,18 +23,20 @@ class ClientService {
             ->get();
     }
 
-    public function store($data) {
-       return Client::create([
-           'fio' => $data['fio'],
-           'address' => $data['address'],
-           'phone' => $data['phone'],
-           'description' => $data['description'] ?? '',
-           'limit' => $data['limit'],
-           'amount' => $data['amount']
-       ]);
+    public function store($data)
+    {
+        return Client::create([
+            'fio' => $data['fio'],
+            'address' => $data['address'],
+            'phone' => $data['phone'],
+            'description' => $data['description'] ?? '',
+            'limit' => $data['limit'],
+            'amount' => $data['amount']
+        ]);
     }
 
-    public function update($id, $data) {
+    public function update($id, $data)
+    {
         $user = Client::find($id);
         $user->update([
             'fio' => $data['fio'],
@@ -48,21 +52,16 @@ class ClientService {
 
     public function delete($id)
     {
-        $credit = Credit_Debit_History::where('client_id', $id)->first();
-
-        if ($credit === null) {
-            return Client::find($id)?->delete();
-        }
-
-        return false;
-
+        return Client::find($id)?->delete();
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         return Client::find($id);
     }
 
-    public function getClientInfo($id) {
+    public function getClientInfo($id)
+    {
         $client = Client::find($id);
 
         $debit_credit = Credit_Debit_History::selectRaw(
@@ -121,11 +120,6 @@ class ClientService {
     }
 
 }
-
-
-
-
-
 
 
 ?>
