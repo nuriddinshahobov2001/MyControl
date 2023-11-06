@@ -19,7 +19,7 @@ class MoonShineServiceProvider extends ServiceProvider
     {
         app(MoonShine::class)->menu([
             MenuItem::make('Пользователы', new UserResource())->icon('users'),
-            MenuItem::make('Магазины', new ShopResource())->icon('users'),
+//            MenuItem::make('Магазины', new ShopResource())->icon('users'),
         ]);
     }
 }
