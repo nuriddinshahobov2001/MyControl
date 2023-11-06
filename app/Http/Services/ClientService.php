@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\Client;
+use App\Models\Credit_Debit;
 use App\Models\Credit_Debit_History;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -57,11 +58,17 @@ class ClientService
             SUM(CASE when type = "debit" THEN summa ELSE 0 END) as debit
         ')->where('client_id', $id)->get();
 
+
         $debt = $credits[0]->debit - $credits[0]->credit;
 
-        if ($debt != 0) return $debt;
+        if ($debt != 0) {
+            return $debt;
+        } else {
+            Credit_Debit_History::where('client_id', $id)->delete();
+            Credit_Debit::where('client_id', $id)->delete();
 
-        return Client::find($id)?->delete();
+            return Client::find($id)?->delete();
+        }
     }
 
     public function show($id)
