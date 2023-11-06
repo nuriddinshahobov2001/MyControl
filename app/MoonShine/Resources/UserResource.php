@@ -26,7 +26,6 @@ class UserResource extends Resource
             Text::make('Логин', 'login'),
             Text::make('Пароль', 'password')->hideOnIndex(),
             Phone::make('Телефон', 'phone'),
-            BelongsToMany::make('Магазины', 'stores')->onlyCount()->select()->hideOnIndex()
         ];
 	}
 
