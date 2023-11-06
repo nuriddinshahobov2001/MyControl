@@ -52,6 +52,15 @@ class ClientService
 
     public function delete($id)
     {
+        $credits = Credit_Debit_History::selectRaw('
+            SUM(CASE when type = "credit" THEN summa ELSE 0 END) as credit,
+            SUM(CASE when type = "debit" THEN summa ELSE 0 END) as debit
+        ')->where('client_id', $id)->get();
+
+        $debt = $credits[0]->debit - $credits[0]->credit;
+
+        if ($debt != 0) return false;
+
         return Client::find($id)?->delete();
     }
 
