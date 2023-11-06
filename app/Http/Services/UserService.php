@@ -20,12 +20,20 @@ class UserService {
     public function update($user, $data)
     {
         try {
-            $user->update([
-                'fio' => $data['fio'],
-                'login' => $data['login'],
-                'phone' => $data['phone'],
-                'password' => Hash::make($data['password'])
-            ]);
+            if (isset($data['login']) && $data['login'] !== 'admin'){
+                $user->update([
+                    'fio' => $data['fio'],
+                    'login' => $data['login'],
+                    'phone' => $data['phone'],
+                    'password' => Hash::make($data['password'])
+                ]);
+            } else {
+                $user->update([
+                    'fio' => $data['fio'],
+                    'phone' => $data['phone'],
+                    'password' => Hash::make($data['password'])
+                ]);
+            }
 
             return true;
         } catch (\Exception $e) {
