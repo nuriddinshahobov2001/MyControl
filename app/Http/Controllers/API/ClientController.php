@@ -119,7 +119,7 @@ class ClientController extends Controller
         }
 
         return response()->json([
-            'message' => false,
+            'status' => false,
             'debt' => $message
         ]);
     }
