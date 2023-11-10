@@ -25,6 +25,12 @@ class CreditDebitService {
             'type' => $data['type']
         ]);
 
+        $counter = Client::max('counter');
+
+        $client = Client::find($data['client_id']);
+        $client->counter = $counter+1;
+        $client->save();
+
         return Credit_Debit::create([
            'date' => $data['date'],
            'client_id' => $data['client_id'],
