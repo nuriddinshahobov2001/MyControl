@@ -24,15 +24,34 @@ class ClientController extends Controller
         $this->clientService = $clientService;
     }
 
-    public function index() {
-
+    public function index()
+    {
         $clients = $this->clientService->index();
+
+        $clientsWithDebt = $clients->map(function ($client) {
+            $data = $this->clientService->allDebitCreditOfClient($client->id);
+            $debt = $data[0]->debit - $data[0]->credit;
+            $limit = $client->limit - $debt;
+
+            return [
+                'id' => $client->id,
+                'fio' => $client->fio,
+                'phone' => $client->phone,
+                'address' => $client->address,
+                'description' => $client->description,
+                'limit' => $client->limit,
+                'amount' => $client->amount,
+                'debt' => $debt,
+                'limit_after_debt' => $limit,
+            ];
+        });
 
         return response([
             'message' => true,
-            'clients' => ClientResource::collection($clients)
+            'clients' => $clientsWithDebt,
         ]);
     }
+
 
     public function show($id): JsonResponse
     {
